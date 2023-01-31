@@ -61,3 +61,13 @@ Git was employed in this project and the project code hosted on GitHub. I used b
         'profiles',
     ]
     ```
+    + Install Django REST Framework and update settings.py
+    ```
+    $ pip install djangorestframework
+
+    INSTALLED_APPS = [
+        'cloudinary',
+        'rest_framework'
+        'profiles'
+    ]
+    ```
