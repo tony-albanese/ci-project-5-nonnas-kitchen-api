@@ -22,10 +22,10 @@ Git was employed in this project and the project code hosted on GitHub. I used b
     + Create project
     + Install Cloudinary Storage and Pillow
     ```
-    pip install ‘django<4’
-    django-admin startproject nonnas_kitchen .
-    pip install django-cloudinary-storage
-    pip install Pillow
+    $ pip install ‘django<4’
+    $ django-admin startproject nonnas_kitchen .
+    $ pip install django-cloudinary-storage
+    $ pip install Pillow
     ```
     
     + Add these apps to settings.py
@@ -51,4 +51,13 @@ Git was employed in this project and the project code hosted on GitHub. I used b
     CLOUDINARY_STORAGE = {
     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
     }
+    ```
+    + Created profiles app and added it to settings.py
+    ```
+    $ python manage.py startapp profiles
+
+    INSTALLED_APPS = [
+        (...),
+        'profiles',
+    ]
     ```
