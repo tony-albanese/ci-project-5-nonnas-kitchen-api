@@ -71,3 +71,6 @@ Git was employed in this project and the project code hosted on GitHub. I used b
         'profiles'
     ]
     ```
+
+# Credits
+Default avatar: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by logisstudio - Flaticon</a>
