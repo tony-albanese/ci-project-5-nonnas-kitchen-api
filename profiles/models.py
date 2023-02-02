@@ -1,5 +1,6 @@
 from django.db import models
-from kitchen_user import User
+from django.db.models.signals import post_save
+from kitchen_user.models import User
 
 
 class Profile(models.Model):
@@ -26,3 +27,11 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.owner}'s profile"
+
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(owner=instance)
+
+
+post_save.connect(create_profile, sender=User)
