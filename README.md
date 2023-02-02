@@ -30,6 +30,20 @@ The **Profile** model encapsulates the extra data to enhance the standard inform
 |CharField| specialty|
 |ImageField|avatar|
 
+The **Post** model encapsulates the information a user wants to share on the site. The idea behind a **Post** object is that is supposed to be realtively short (1 to 2 paragraphs) and is supposed to represent a memory or anecdote connected to food from their ancestors. In addition to content, the user can (and should) attach a photo to the post. In addition, they must categorize the post as a history, anecdote, or tip. 
+
+|Post ||
+|-----|----|
+|type|field name|
+|ImageField|cover_image|
+|User|author|
+|DateTimeField|created_on|
+|CharField|title|
+|TextField|content|
+|UrlField|link|
+|CharField|tags|
+
+
 # Features
 ## Profiles Endpoint
 ```
