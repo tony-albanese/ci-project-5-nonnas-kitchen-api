@@ -2,6 +2,28 @@
 
 # Nonna's Kitchen Backend
 
+# Database Design
+## Models
+The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
+
+settings.py was modified with the following setting so that django authorizaton uses this custom model.
+```
+AUTH_USER_MODEL = 'kitchen_user.User'
+```
+
+
+The **Profile** model encapsulates the extra data to enhance the standard information in the User model. The Profile contains additional fields for a biography, an avatar, and a cooking speciality.
+|Profile ||
+|-----|----|
+|type|field name|
+|OneToOne(User) |owner|
+|DateTimeField|created_on|
+|CharField|first_name|
+|CharField|last_name|
+|TextField|bio|
+|CharField| specialty|
+|ImageField|avatar|
+
 
 # Version Control Strategy
 Git was employed in this project and the project code hosted on GitHub. I used branches in order to keep the main branch as "pure" as possible. The strategy was to have each branch dedicated to one feature or fix. Once I was satisfied at a particular stage of a branch, I would navigate to GitHub, click on my repository, select the branch, and create a pull request. GitHub would then check if there are no conflicts and indicate if the branch could be merged into main. (One can choose which branch to merge into.) Once the pull request is created, I navigated down, wrote a comment, and clicked on the green Merge button and the commits would be merged into the main branch. I tried to keep commits as atomic as possible - focusing only on one element or feature at a time. This was not always the case, but most of the commits are relatively small changes. In addition, I tried not to mix features in a branch. Small tweaks to other features were allowed, but the majority of the work on each branch was dedicated to that one feature. This is in line with the agile method of tackling a project - the team (in this case me) should only work on one feature at a time. 
