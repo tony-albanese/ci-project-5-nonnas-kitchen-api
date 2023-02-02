@@ -1,3 +1,35 @@
-from django.shortcuts import render
-
+from django.shortcuts import get_object_or_404
+from rest_framework import status
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Profile
+from .serializers import ProfileSerializer
+from kitchen.permissions import ProfilePermissions
 # Create your views here.
+
+
+class ProfileView(APIView):
+    def get(self, request):
+        profiles = Profile.objects.all()
+        serializer = ProfileSerializer(profiles, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+class ProfileDetailView(APIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [ProfilePermissions]
+ 
+    def get(self, request, id):
+        profile = get_object_or_404(Profile, id=id)
+        self.check_object_permissions(self.request, profile)
+        serializer = ProfileSerializer(profile, context={'request': request})
+        return Response(serializer.data)
+    
+    def put(self, request, id):
+        profile = get_object_or_404(Profile, id=id)
+        serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
