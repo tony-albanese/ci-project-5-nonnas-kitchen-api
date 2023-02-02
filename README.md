@@ -22,7 +22,7 @@ The **Profile** model encapsulates the extra data to enhance the standard inform
 |Profile ||
 |-----|----|
 |type|field name|
-|OneToOne(User) |owner|
+|ForeignKey(User) |owner|
 |DateTimeField|created_on|
 |CharField|first_name|
 |CharField|last_name|
