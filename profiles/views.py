@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Profile
 from .serializers import ProfileSerializer
-from kitchen.permissions import ProfilePermissions
+from kitchen.permissions import OwnerPermissions
 # Create your views here.
 
 
@@ -17,7 +17,7 @@ class ProfileView(APIView):
 
 class ProfileDetailView(APIView):
     serializer_class = ProfileSerializer
-    permission_classes = [ProfilePermissions]
+    permission_classes = [OwnerPermissions]
  
     def get(self, request, id):
         profile = get_object_or_404(Profile, id=id)
