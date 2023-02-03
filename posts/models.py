@@ -26,6 +26,9 @@ class BlogPost(models.Model):
 
     def number_of_likes(self):
         return self.likes.count()
+    
+    def average_rating(self):
+        return Rating.objects.filter(blog_post=self).aggregate(Avg("rating")["rating__avg"])
 
 
 class Rating(models.Model):
