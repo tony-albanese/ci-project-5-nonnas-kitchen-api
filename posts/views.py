@@ -7,3 +7,11 @@ from .serializers import BlogPostSerializer
 # Create your views here.
 
 
+class BlogPostView(APIView):
+    def get(self, request):
+        context = {'request': request}
+        blog_posts = BlogPost.objects.all()
+        serializer = BlogPostSerializer(blog_posts, many=True, context=context)
+
+        return Response(serializer.data)
+
