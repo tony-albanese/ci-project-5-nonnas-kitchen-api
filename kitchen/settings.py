@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'profiles',
     'kitchen_user',
-    'posts'
+    'posts',
 ]
 
 MIDDLEWARE = [
