@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'profiles',
     'kitchen_user',
     'posts',
+    'taggit'
 ]
 
 MIDDLEWARE = [
