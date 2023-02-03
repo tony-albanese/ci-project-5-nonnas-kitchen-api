@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.signals import post_save
+from taggit.managers import TaggableManager
 from kitchen_user.models import User
 
 
@@ -21,6 +22,7 @@ class Profile(models.Model):
     bio = models.TextField(blank=True)
     specialty = models.CharField(max_length=5, choices=SPECIALTY_CHOICES, default='NO')
     avatar = models.ImageField(upload_to='images/', default='../default_avatar_kaw1ox')
+    tags = TaggableManager()
 
     class Meta:
         ordering = ['-created_on']
