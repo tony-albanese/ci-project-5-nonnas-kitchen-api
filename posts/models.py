@@ -1,6 +1,6 @@
 from django.db import models
 from kitchen_user.models import User
-
+from taggit.managers import TaggableManager
 # Create your models here.
 
 
@@ -21,6 +21,7 @@ class BlogPost(models.Model):
     ratings = models.ManyToManyField(User, blank=True, related_name='post_ratings')
     posted_on = models.DateTimeField(auto_now=True)
     post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
+    tags = TaggableManager()
 
     class Meta:
         ordering = ['-posted_on']
