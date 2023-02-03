@@ -20,6 +20,10 @@ class BlogPost(models.Model):
     likes = models.ManyToManyField(User, blank=True, related_name='post_likes')
     ratings = models.ManyToManyField(User, blank=True, related_name='post_ratings')
     posted_on = models.DateTimeField(auto_now=True)
+    post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
+
+    class Meta:
+        ordering = ['-posted_on']
 
     def __str__(self):
         return self.title
