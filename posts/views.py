@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import status, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import BlogPost
 from .serializers import BlogPostSerializer
+from kitchen.permissions import OwnerPermissions
 # Create your views here.
 
 
@@ -28,3 +29,15 @@ class BlogPostView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class BlogPostDetailView(APIView):
+    permission_classes = [OwnerPermissions]
+    serializer_class = BlogPostSerializer
+
+    def get(self, request, id):
+        blog_post = get_object_or_404(BlogPost, id=id)
+        serializer = BlogPostSerializer(
+            blog_post, context={'request': request}
+        )
+        return Response(serializer.data)
