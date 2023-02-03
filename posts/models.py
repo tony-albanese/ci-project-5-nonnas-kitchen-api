@@ -1,5 +1,5 @@
 from django.db import models
-
+from kitchen_user.models import User
 
 # Create your models here.
 
