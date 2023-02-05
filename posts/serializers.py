@@ -1,6 +1,7 @@
 from taggit.serializers import (TagListSerializerField, TaggitSerializer)
+from django.db import IntegrityError
 from rest_framework import serializers
-from .models import BlogPost
+from .models import BlogPost, Like
 
 
 class BlogPostSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -30,3 +31,22 @@ class BlogPostSerializer(TaggitSerializer, serializers.ModelSerializer):
         fields = [
             'id', 'author', 'title',  'body','tags', 'posted_on', 'post_image', 'is_author','profile_id','profile_image',
         ]
+
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+
+    class Meta:
+        model = Like
+        fields = [
+            'id', 'created_on', 'owner', 'blog_post'
+        ]
+    
+    def create(self, validated_data):
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError({
+                'detail': 'possible duplicate like'
+            })
