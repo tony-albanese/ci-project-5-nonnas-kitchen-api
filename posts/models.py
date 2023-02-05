@@ -23,6 +23,8 @@ class BlogPost(models.Model):
     post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
     tags = TaggableManager()
 
+    # TODO: Add likes and ratings
+
     class Meta:
         ordering = ['-posted_on']
 
