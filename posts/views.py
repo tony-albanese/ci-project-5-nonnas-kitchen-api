@@ -1,10 +1,10 @@
 from django.shortcuts import render, get_object_or_404
-from rest_framework import status, permissions
+from rest_framework import status, permissions, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import BlogPost
-from .serializers import BlogPostSerializer
-from kitchen.permissions import AuthorPermissions
+from .models import BlogPost, Like
+from .serializers import BlogPostSerializer, LikeSerializer
+from kitchen.permissions import AuthorPermissions, OwnerPermissions
 # Create your views here.
 
 
@@ -57,3 +57,12 @@ class BlogPostDetailView(APIView):
         blog_post = get_object_or_404(BlogPost, id=id)
         blog_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class LikeList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = LikeSerializer
+    queryset = Like.objects.all()
+
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
