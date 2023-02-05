@@ -1,4 +1,5 @@
 from django.db import models
+from posts.models import BlogPost
 from kitchen_user.models import User
 # Create your models here.
 
@@ -7,6 +8,7 @@ class Comment(models.Model):
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
     body = models.TextField()
+    # TODO must implement likes
 
 
     class Meta:
