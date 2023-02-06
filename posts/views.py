@@ -57,6 +57,7 @@ class BlogPostDetailView(APIView):
 
     def delete(self, request, id):
         blog_post = get_object_or_404(BlogPost, id=id)
+        self.check_object_permissions(self.request, blog_post)
         blog_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
