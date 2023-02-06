@@ -37,6 +37,7 @@ class BlogPostDetailView(APIView):
 
     def get(self, request, id):
         blog_post = get_object_or_404(BlogPost, id=id)
+        self.check_object_permissions(self.request, blog_post)
         serializer = BlogPostSerializer(
             blog_post, context={'request': request}
         )
@@ -44,6 +45,7 @@ class BlogPostDetailView(APIView):
     
     def put(self, request, id):
         blog_post = get_object_or_404(BlogPost, id=id)
+        self.check_object_permissions(self.request, blog_post)
         serializer = BlogPostSerializer(
             blog_post, data=request.data, context={'request': request}
         )
@@ -58,11 +60,11 @@ class BlogPostDetailView(APIView):
         blog_post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class LikeList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class = LikeSerializer
     queryset = Like.objects.all()
-
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
