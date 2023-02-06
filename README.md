@@ -141,6 +141,7 @@ Git was employed in this project and the project code hosted on GitHub. I used b
 + [Cloudinary](https://cloudinary.com/) - Media cloud storage service to serve static files
 + [ElephantSQL](https://www.elephantsql.com/) - An online service running a PostgreSQL server as a service.
 + [Pillow](https://pillow.readthedocs.io/en/stable/) A Python imaging library to help process images.
++ [django-taggit](https://django-taggit.readthedocs.io/en/latest/)A django app for storing and searching tags
 
 ## Project Creation
 + Cloned Code Institute Repository and gave the new respositry the name [ci-project-5-nonnas-kitchen-backend](https://github.com/tony-albanese/ci-project-5-nonnas-kitchen-backend)
