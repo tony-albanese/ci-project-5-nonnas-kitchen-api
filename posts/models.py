@@ -5,13 +5,13 @@ from taggit.managers import TaggableManager
 
 
 class BlogPost(models.Model):
-    TAGS = {
-        'anec': 'Anecdote',
-        'tip': 'Tip',
-        'hist': 'History',
-        'fact': 'Fun Fact',
-        'orig': 'Origin',
-        'remin': 'Reminiscence'
+    CATEGORIES = {
+        ('anec', 'Anecdote'),
+        ('tip', 'Tip'),
+        ('hist', 'History'),
+        ('fact', 'Fun Fact'),
+        ('orig', 'Origin'),
+        ('remin', 'Reminiscence')
     }
 
     title = models.CharField(max_length=255)
@@ -21,7 +21,7 @@ class BlogPost(models.Model):
     ratings = models.ManyToManyField(User, blank=True, related_name='post_ratings')
     posted_on = models.DateTimeField(auto_now=True)
     post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
-    tags = TaggableManager()
+    category = models.CharField(max_length=5, choices=CATEGORIES, default='anec')
 
     # TODO: Add likes and ratings
 

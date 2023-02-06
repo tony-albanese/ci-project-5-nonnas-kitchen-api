@@ -4,12 +4,12 @@ from rest_framework import serializers
 from .models import BlogPost, Like
 
 
-class BlogPostSerializer(TaggitSerializer, serializers.ModelSerializer):
+class BlogPostSerializer(serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
     is_author = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='author.profile.id')
     profile_image = serializers.ReadOnlyField(source='author.profile.avatar.url')
-    tags = TagListSerializerField()
+    
 
     def validate_post_image(self, value):
         if value.size > 1024*1024*2:
@@ -29,9 +29,8 @@ class BlogPostSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = BlogPost
         fields = [
-            'id', 'author', 'title',  'body','tags', 'posted_on', 'post_image', 'is_author','profile_id','profile_image',
+            'id', 'author', 'title',  'body','category', 'posted_on', 'post_image', 'is_author','profile_id','profile_image',
         ]
-
 
 
 class LikeSerializer(serializers.ModelSerializer):
