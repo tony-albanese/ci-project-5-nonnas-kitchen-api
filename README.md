@@ -23,9 +23,9 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent the user from modifying or deleting comments that they are not the author of so that I do not have to implement these checks on the front end.
 
 ### Likes
-As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to add a like to a BlogPost so that I do not have to query the database manually.
-As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a like so that I do not have to query the database manually.
-As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end..
++ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to add a like to a BlogPost so that I do not have to query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a like so that I do not have to + query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end..
 
 # Database Design
 ## Models
@@ -70,6 +70,12 @@ The **Comment** model encapsulates the information required for a User to leave 
 |DateTimeField|created_on|
 |TextField|body|
 
+The **Like** model encapsulates the information required for a User to like a BlogPost. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes. The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
+|Like ||
+|-----|----|
+|ForeignKey(User)|owner|
+|ForeignKey(BlogPost)|blog_post|
+|DateTimeField|created_on|
 
 # Features
 ## Profiles Endpoint
