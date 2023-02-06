@@ -88,6 +88,7 @@ This endpoint will retrieve the details for a particular Profile. The id (which 
 ## Posts endpoint
 ```
 GET posts/
+POST posts/
 ```
 This endpoint fetches all of the posts from the database. If the user is authenticated, they are allowed to add a post.
 ![get all posts screenshot](repo_images/get_posts.png)
@@ -104,6 +105,28 @@ These endpoints are to view the details for an individual post. If the user is a
 > + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a Post so that I do not have to manually update the database when a user deletes their post.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to and endpoint to update a Post so that I do not have to manually update the database when a user updates their post.
 > + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifiying or deleting posts that they did not author so that I do not have to check for permissions manually.
+
+## Comment Endpoint
+```
+GET comments/
+POST comments/
+```
+These endpoints return all of the comments in the database (GET) and allow a user to add a comment to a particular BlogPost if they are logged in.
+![get and post comment](repo_images/comment_list.png)
+
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint for users to comment on a post so that I do not have to manually write to the database on the front end.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to get all of the comments so that I do not have to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent the user from modifying or deleting comments that they are not the author of so that I do not have to implement these checks on the front end.
+
+```
+GET comments/<int:id>
+PUT comments/<int:id>
+DELETE comments/<int:id>
+```
+These endpoints allow a user to modify a comment if they are logged in AND are the author of the comment. 
+![comment detail](repo_images/comment_detail.png)
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint for users to update a comment on a post so that I do not have to manually write to the database on the front end.
+> + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent the user from modifying or deleting comments that they are not the author of so that I do not have to implement these checks on the front end.
 
 # Testing
 ## Behavior Driven Development (BDD)
