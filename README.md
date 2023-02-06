@@ -9,6 +9,12 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to modify profile data so that I can provide profile editing features to end users.
 + As a developer using Nonna's Kitchen backend to build applications, I want to fetch profile data with permissions so that I protect sensitive user data from exposure and compromise.
 
+### Posts
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to get all posts so that I do not have to manually query the database to get the data.
++ As a developer using Nonna's Kitchen backend to build applications, I want to **have an endpoint to save a Post object to the database ** so that users of my application can share their content.
++ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a Post so that I do not have to manually update the database when a user deletes their post.
++ As a developer using Nonna's Kitchen backend to build applications, I want to and endpoint to update a Post so that I do not have to manually update the database when a user updates their post.
+
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -27,7 +33,7 @@ The **Profile** model encapsulates the extra data to enhance the standard inform
 |CharField|first_name|
 |CharField|last_name|
 |TextField|bio|
-|CharField| specialty|
+|CharField|specialty|
 |ImageField|avatar|
 
 The **Post** model encapsulates the information a user wants to share on the site. The idea behind a **Post** object is that is supposed to be realtively short (1 to 2 paragraphs) and is supposed to represent a memory or anecdote connected to food from their ancestors. In addition to content, the user can (and should) attach a photo to the post. In addition, they must categorize the post as a history, anecdote, or tip. 
@@ -41,7 +47,7 @@ The **Post** model encapsulates the information a user wants to share on the sit
 |CharField|title|
 |TextField|content|
 |UrlField|link|
-|CharField|tags|
+|CharField|category|
 
 
 # Features
