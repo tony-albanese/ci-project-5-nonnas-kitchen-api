@@ -11,10 +11,10 @@
 
 ### Posts
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to get all posts so that I do not have to manually query the database to get the data.
-+ As a developer using Nonna's Kitchen backend to build applications, I want to **have an endpoint to save a Post object to the database ** so that users of my application can share their content.
++ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to save a Post object to the database so that users of my application can share their content.
 + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a Post so that I do not have to manually update the database when a user deletes their post.
 + As a developer using Nonna's Kitchen backend to build applications, I want to and endpoint to update a Post so that I do not have to manually update the database when a user updates their post.
-
++ As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifiying or deleting posts that they did not author so that I do not have to check for permissions manually.
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -61,6 +61,7 @@ This endpoint will return all of the profiles.
 
 ```
 GET profiles/<int:id>
+PUT profiles/<int:id>
 ```
 This endpoint will retrieve the details for a particular Profile. The id (which serves as the primary key), is used to determine which Profile to fetch. If the current user is the owner of the Profile, they are allowed to edit it and save the changes. Otherwise, they can only view it. In the following screenshots, one Profile belongs to the user and the other not. They can edit the one that belongs to them.
 ![Individual Profile Is Owner](repo_images/profile_is_owner.png)  
@@ -68,6 +69,26 @@ This endpoint will retrieve the details for a particular Profile. The id (which 
 > + As a developer using Nonna's Kitchen backend to build applications, I want to fetch the data from one profile so that I can display it to the user for them to edit.  
 > + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to modify profile data so that I can provide profile editing features to end users.  
 > + As a developer using Nonna's Kitchen backend to build applications, I want to fetch profile data with permissions so that I protect sensitive user data from exposure and compromise.  
+
+## Posts endpoint
+```
+GET posts/
+```
+This endpoint fetches all of the posts from the database. If the user is authenticated, they are allowed to add a post.
+![get all posts screenshot](repo_images/get_posts.png)
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to get all posts so that I do not have to manually query the database to get the data.  
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to save a Post object to the database so that users of my application can share their content.
+
+```
+GET posts/<int:id>
+PUT posts/<int:id>
+DELETE posts/<int:id>
+```
+These endpoints are to view the details for an individual post. If the user is authenticated, they can modify or delete the post ONLY if they are the author of the post.
+![modify delete post if owner](repo_images/post_detail_isauthor.png)
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a Post so that I do not have to manually update the database when a user deletes their post.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to and endpoint to update a Post so that I do not have to manually update the database when a user updates their post.
+> + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifiying or deleting posts that they did not author so that I do not have to check for permissions manually.
 
 # Testing
 ## Behavior Driven Development (BDD)
