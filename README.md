@@ -22,6 +22,11 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to get all of the comments so that I do not have to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent the user from modifying or deleting comments that they are not the author of so that I do not have to implement these checks on the front end.
 
+### Likes
+As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to add a like to a BlogPost so that I do not have to query the database manually.
+As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a like so that I do not have to query the database manually.
+As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end..
+
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -64,6 +69,7 @@ The **Comment** model encapsulates the information required for a User to leave 
 |ForeignKey(BlogPost)|blog_post|
 |DateTimeField|created_on|
 |TextField|body|
+
 
 # Features
 ## Profiles Endpoint
