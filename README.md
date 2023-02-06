@@ -43,9 +43,9 @@ The **Profile** model encapsulates the extra data to enhance the standard inform
 |CharField|specialty|
 |ImageField|avatar|
 
-The **Post** model encapsulates the information a user wants to share on the site. The idea behind a **Post** object is that is supposed to be realtively short (1 to 2 paragraphs) and is supposed to represent a memory or anecdote connected to food from their ancestors. In addition to content, the user can (and should) attach a photo to the post. In addition, they must categorize the post as a history, anecdote, or tip. 
+The **BlogPost** model encapsulates the information a user wants to share on the site. The idea behind a **BlogPost** object is that is supposed to be realtively short (1 to 2 paragraphs) and is supposed to represent a memory or anecdote connected to food from their ancestors. In addition to content, the user can (and should) attach a photo to the post. In addition, they must categorize the post as a history, anecdote, or tip. 
 
-|Post ||
+|BlogPost ||
 |-----|----|
 |type|field name|
 |ImageField|cover_image|
@@ -56,6 +56,14 @@ The **Post** model encapsulates the information a user wants to share on the sit
 |UrlField|link|
 |CharField|category|
 
+The **Comment** model encapsulates the information required for a User to leave a comment on a BlogPost. The author field is a one-to-many realationhip with a User since each Comment can only have one author. There is a also a one-to-money relationship with the BlogPost because each Comment can only belong to one BlogPost but a BlogPost can have many Comments.
+|Comment ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|author|
+|ForeignKey(BlogPost)|blog_post|
+|DateTimeField|created_on|
+|TextField|body|
 
 # Features
 ## Profiles Endpoint
