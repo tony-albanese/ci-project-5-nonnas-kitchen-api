@@ -55,3 +55,19 @@ class PostDetailViewTests(APITestCase):
         self.client.login(username='user_a', password='pass')
         response = self.client.put('/posts/2/', {'title': 'a new title', 'body': 'new body'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_delete_their_own_post(self):
+        self.client.login(username='user_a', password='pass')
+        current_user = User.objects.get(username='user_a')
+        BlogPost.objects.create(author=current_user, title='Test Title')
+        response = self.client.delete('/posts/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_user_cannot_delete_post_not_their_own(self):
+        self.client.login(username='user_a', password='pass')
+        current_user = User.objects.get(username='user_a')
+        BlogPost.objects.create(author=current_user, title='Test Title')
+        self.client.logout()
+        self.client.login(username='user_b', password='pass')
+        response = self.client.delete('/posts/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
