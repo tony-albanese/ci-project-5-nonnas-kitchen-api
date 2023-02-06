@@ -1,4 +1,3 @@
-from django.test import TestCase
 from .models import BlogPost
 from kitchen_user.models import User
 from rest_framework import status
@@ -44,3 +43,13 @@ class PostDetailViewTests(APITestCase):
     def test_cannot_retrieve_post_with_invalid_id(self):
         response = self.client.get('/posts/1533434/')
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_user_can_update_own_post(self):
+        self.client.login(username='user_a', password='pass')
+        response = self.client.put('/posts/1/', {'title': 'a new title', 'body': 'new body'})
+        post = BlogPost.objects.filter(id=1).first()
+        self.assertEqual(post.title, 'a new title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_user_cant_update_another_users_post(self):
+        pass
