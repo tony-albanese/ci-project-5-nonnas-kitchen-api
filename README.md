@@ -25,7 +25,7 @@
 ### Likes
 + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to add a like to a BlogPost so that I do not have to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a like so that I do not have to + query the database manually.
-+ As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end..
++ As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end.
 
 # Database Design
 ## Models
@@ -139,6 +139,21 @@ These endpoints allow a user to modify a comment if they are logged in AND are t
 ![comment detail](repo_images/comment_detail.png)
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint for users to update a comment on a post so that I do not have to manually write to the database on the front end.
 > + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent the user from modifying or deleting comments that they are not the author of so that I do not have to implement these checks on the front end.
+
+## Like endpoint
+```
+GET likes/
+POST likes/
+GET likes/<int:id>
+DELETE likes/<int:id>
+```
+
+This endpoint allows users to retrieve a list of likes, create a like, and delete a like. (There is no need to update a like.) In addition, permissions are enforced so that only authenticated users can like a BlogPost and they can only delete a like if they are the owner of the like.
+![like list](repo_images/likes.png)  
+![like detail](repo_images/like_detail.png)
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to add a like to a BlogPost so that I do not have to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a like so that I do not have to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end.
 
 # Testing
 ## Behavior Driven Development (BDD)
