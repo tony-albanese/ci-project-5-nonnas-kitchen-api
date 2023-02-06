@@ -26,3 +26,21 @@ class PostListViewTests(APITestCase):
         response = self.client.post('/posts/', {'title': 'A test title.', 'body': 'test body'})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
+
+class PostDetailViewTests(APITestCase):
+    def setUp(self):
+        user_a = User.objects.create(username='user_a', password='pass')
+        user_b = User.objects.create(username='user_b', password='pass')
+
+        BlogPost.objects.create(author=user_a, title='Test Title A', body='A')
+        BlogPost.objects.create(author=user_b, title='Test Title B', body='B')
+
+    def test_can_retrieve_post_using_valid_id(self):
+        response = self.client.get('/posts/1/')
+        
+        self.assertEqual(response.data['title'], 'Test Title A')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_cannot_retrieve_post_with_invalid_id(self):
+        response = self.client.get('/posts/1533434/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
