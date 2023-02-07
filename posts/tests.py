@@ -107,7 +107,13 @@ class TestLikeView(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
     
     def test_user_can_delete_own_like(self):
-        pass
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/likes/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cannot_delete_other_likes(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.delete('/likes/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
