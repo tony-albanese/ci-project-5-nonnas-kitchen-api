@@ -44,3 +44,26 @@ class TestFollowerListView(APITestCase):
         self.client.login(username='user_a', password='pass')
         response = self.client.post('/followers/', {'following': 1, 'follower': 2 })
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class TestFollowerDetailView(APITestCase):
+    def setUp(self):
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+        user_c = User.objects.create_user(username='user_c', password='pass')
+
+        # Create a follower
+        Follower.objects.create(following=user_a, follower=user_b)
+
+    def test_get_a_follower(self):
+        response = self.client.get('/followers/1/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_unfollow_a_user(self):
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/followers/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+    
+    def test_cant_unfollow_if_not_logged_in(self):
+        response = self.client.delete('/followers/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
