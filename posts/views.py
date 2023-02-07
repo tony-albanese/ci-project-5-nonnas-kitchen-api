@@ -11,7 +11,19 @@ class BlogPostView(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = BlogPost.objects.all()
+    queryset = BlogPost.objects.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comment', distinct=True)
+    ).order_by('-posted_on')
+
+    filter_backends = [
+        filters.OrderingFilter
+    ]
+
+    ordering_fields = [
+        'likes_count',
+        'comments_count',
+    ]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
