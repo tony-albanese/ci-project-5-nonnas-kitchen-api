@@ -80,9 +80,19 @@ The **Comment** model encapsulates the information required for a User to leave 
 The **Like** model encapsulates the information required for a User to like a BlogPost. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes. The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
 |Like ||
 |-----|----|
+|type|field name|
 |ForeignKey(User)|owner|
 |ForeignKey(BlogPost)|blog_post|
 |DateTimeField|created_on|
+
+
+The **Follower** model encapsulates the information required for a User to follow another User. The following field is the User that is following a User. The follower field is the User that is followed by the user in the following field.
+|Like ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|following|
+|ForeignKey(User)|follower|
+|DateTimeField|followed_on|
 
 # Features
 ## Profiles Endpoint
@@ -161,6 +171,22 @@ This endpoint allows users to retrieve a list of likes, create a like, and delet
 > + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to add a like to a BlogPost so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a like so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to prevent users from deleting a like they did not create so that I do not have to perform this check on the front end.
+
+
+## Follower endpoint
+```
+POST followers/
+GET followers/
+GET followers/<int:id>
+DELETE followers/<int:id>
+```
+This endpoint allows users to follow and unfollow each other. In addition, one can retrieve the list of all Followers for filtering and analysis.
+![follower list](repo_images/follower_list.png) 
+![folower detail](repo_images/follower_detail.png)
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to allow a user to follow another user so that I do not have to manually query the database.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to allow users to unfollow each other so that I do not have to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to get a list of followers with an endpoint so that I do not have to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to implement permissions about followers so that I do not have to manually implement security features on the front end.
 
 # Testing
 ## Behavior Driven Development (BDD)
