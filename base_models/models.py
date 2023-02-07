@@ -23,3 +23,11 @@ class AbstractLike(models.Model):
     class Meta:
         abstract = True
         ordering = ['-created_on']
+
+
+class AbstractRating(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.IntegerField(default=0)
+
+    class Meta:
+        abstract = True
