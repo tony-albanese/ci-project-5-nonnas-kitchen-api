@@ -86,7 +86,6 @@ class TestLikeView(APITestCase):
 
         Like.objects.create(owner=user_a, blog_post=blog_post_a)
         Like.objects.create(owner=user_a, blog_post=blog_post_b)
-
       
     def test_user_can_get_likes(self):
         response = self.client.get('/likes/')
@@ -94,12 +93,18 @@ class TestLikeView(APITestCase):
         self.assertEqual(count, 2)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-
     def test_logged_in_user_can_like_post(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        blog_post_b = BlogPost.objects.get(id=2)
+        response = self.client.post('/likes/', {'owner': current_user, 'blog_post':1})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_unauthenticated_user_cant_like_post(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        blog_post_b = BlogPost.objects.get(id=2)
+        response = self.client.post('/likes/', {'owner': current_user, 'blog_post':1})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
     
     def test_user_can_delete_own_like(self):
         pass
