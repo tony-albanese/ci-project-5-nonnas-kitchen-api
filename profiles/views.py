@@ -32,5 +32,9 @@ class ProfileView(generics.ListAPIView):
 class ProfileDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [OwnerPermissions]
-    queryset = Profile.objects.all()
+    queryset = Profile.objects.annotate(
+        posts_count=Count('owner__post_author', distinct=True),
+        follower_count=Count('owner__follower', distinct=True),
+        following_count=Count('owner__following', distinct=True)
+    ).order_by('-created_on')
  
