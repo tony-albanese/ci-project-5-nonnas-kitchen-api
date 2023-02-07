@@ -1,4 +1,4 @@
-from .models import BlogPost
+from .models import BlogPost, Like
 from kitchen_user.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -71,3 +71,23 @@ class PostDetailViewTests(APITestCase):
         self.client.login(username='user_b', password='pass')
         response = self.client.delete('/posts/1/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class TestLikeView(APITestCase):
+    def setUp(self):
+        pass
+
+    def test_user_can_see_likes(self):
+        pass
+
+    def test_logged_in_user_can_like_post(self):
+        pass
+
+    def test_unauthenticated_user_cant_like_post(self):
+        pass
+    
+    def test_user_can_delete_own_like(self):
+        pass
+
+    def test_user_cannot_delete_other_likes(self):
+        pass
