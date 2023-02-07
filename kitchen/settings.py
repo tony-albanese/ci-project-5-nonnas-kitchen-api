@@ -51,7 +51,10 @@ INSTALLED_APPS = [
     'cloudinary',
     'rest_framework',
     'profiles',
-    'kitchen_user'
+    'kitchen_user',
+    'posts',
+    'comments',
+    'taggit'
 ]
 
 MIDDLEWARE = [
