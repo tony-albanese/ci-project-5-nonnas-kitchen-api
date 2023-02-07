@@ -117,3 +117,9 @@ class TestLikeView(APITestCase):
         self.client.login(username='user_b', password='pass')
         response = self.client.delete('/likes/1/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_cant_have_duplicate_likes(self):
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.post('/likes/', {'owner': current_user, 'blog_post':1})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
