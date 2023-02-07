@@ -115,3 +115,46 @@ class CommentViewTests(APITestCase):
    
 
 ```
+
+## followers/ endpoint test cases
+```
+class TestFollowerListView(APITestCase):
+    def setUp(self):
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+        user_c = User.objects.create_user(username='user_c', password='pass')
+
+        # Create a follower
+        Follower.objects.create(following=user_a, follower=user_b)
+
+    def test_get_all_followers(self):
+        pass
+
+    def test_follow_a_user(self):
+        pass
+
+    def test_cant_follow_if_not_logged_in(self):
+        pass
+      
+    def test_cant_follow_user_twice(self):
+        pass
+
+
+class TestFollowerDetailView(APITestCase):
+    def setUp(self):
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+        user_c = User.objects.create_user(username='user_c', password='pass')
+
+        # Create a follower
+        Follower.objects.create(following=user_a, follower=user_b)
+
+    def test_get_a_follower(self):
+        pass
+
+    def test_unfollow_a_user(self):
+        pass
+    
+    def test_cant_unfollow_if_not_logged_in(self):
+        pass
+```

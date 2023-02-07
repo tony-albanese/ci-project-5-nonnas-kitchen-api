@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'profiles',
     'base_models',
     'kitchen_user',
+    'followers',
     'posts',
     'comments',
     'taggit'
