@@ -1,5 +1,6 @@
 from django.db import models
 from kitchen_user.models import User
+from base_models.models import AbstractLike, AbstractRating
 from taggit.managers import TaggableManager
 # Create your models here.
 
@@ -38,21 +39,17 @@ class BlogPost(models.Model):
         return Rating.objects.filter(blog_post=self).aggregate(Avg("rating")["rating__avg"])
 
 
-class Rating(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Rating(AbstractRating):
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
-    rating = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{self.blog_post.title}: {self.rating}"
 
-class Like(models.Model):
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Like(AbstractLike):
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='likes')
-    created_on = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_on']
         unique_together = ['owner', 'blog_post']
 
     def __str__(self):
