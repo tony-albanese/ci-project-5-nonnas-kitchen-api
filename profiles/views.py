@@ -29,21 +29,8 @@ class ProfileView(generics.ListAPIView):
     ]
 
 
-class ProfileDetailView(APIView):
+class ProfileDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
     permission_classes = [OwnerPermissions]
+    queryset = Profile.objects.all()
  
-    def get(self, request, id):
-        profile = get_object_or_404(Profile, id=id)
-        self.check_object_permissions(self.request, profile)
-        serializer = ProfileSerializer(profile, context={'request': request})
-        return Response(serializer.data)
-    
-    def put(self, request, id):
-        profile = get_object_or_404(Profile, id=id)
-        serializer = ProfileSerializer(profile, data=request.data, context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
