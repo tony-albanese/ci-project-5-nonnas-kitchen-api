@@ -115,3 +115,22 @@ class CommentViewTests(APITestCase):
    
 
 ```
+
+## followers/ endpoint test cases
+```
+    def setUp(self):
+        pass
+
+    def test_get_all_followers(self):
+        pass
+
+    def test_follow_a_user(self):
+        pass
+
+    def test_cant_follow_if_not_logged_in(self):
+        pass
+      
+    def test_cant_follow_user_twice(self):
+        pass
+
+```
