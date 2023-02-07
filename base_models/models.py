@@ -14,3 +14,12 @@ class AbstractComment(models.Model):
 
     def __str__(self):
         return self.body
+
+
+class AbstractLike(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['-created_on']
