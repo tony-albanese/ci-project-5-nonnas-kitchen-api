@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404
-from rest_framework import status
+from rest_framework import status, generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .models import Profile
@@ -8,11 +8,9 @@ from kitchen.permissions import OwnerPermissions
 # Create your views here.
 
 
-class ProfileView(APIView):
-    def get(self, request):
-        profiles = Profile.objects.all()
-        serializer = ProfileSerializer(profiles, many=True, context={'request': request})
-        return Response(serializer.data)
+class ProfileView(generics.ListAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 
 class ProfileDetailView(APIView):
