@@ -75,10 +75,25 @@ class PostDetailViewTests(APITestCase):
 
 class TestLikeView(APITestCase):
     def setUp(self):
-        pass
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
 
-    def test_user_can_see_likes(self):
-        pass
+        BlogPost.objects.create(author=user_a, title='Test Title A', body='A')
+        BlogPost.objects.create(author=user_b, title='Test Title B', body='B')
+
+        blog_post_a = BlogPost.objects.get(id=1)
+        blog_post_b = BlogPost.objects.get(id=2)
+
+        Like.objects.create(owner=user_a, blog_post=blog_post_a)
+        Like.objects.create(owner=user_a, blog_post=blog_post_b)
+
+      
+    def test_user_can_get_likes(self):
+        response = self.client.get('/likes/')
+        count = Like.objects.count()
+        self.assertEqual(count, 2)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
     def test_logged_in_user_can_like_post(self):
         pass
