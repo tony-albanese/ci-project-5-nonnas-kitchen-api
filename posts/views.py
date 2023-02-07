@@ -32,7 +32,10 @@ class BlogPostView(generics.ListCreateAPIView):
 class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [AuthorPermissions]
     serializer_class = BlogPostSerializer
-    queryset = BlogPost.objects.all()
+    queryset = BlogPost.objects.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comment', distinct=True)
+    ).order_by('-posted_on')
 
 
 class LikeList(generics.ListCreateAPIView):
