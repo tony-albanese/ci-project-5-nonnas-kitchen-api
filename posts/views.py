@@ -8,27 +8,15 @@ from kitchen.permissions import AuthorPermissions, OwnerPermissions
 # Create your views here.
 
 
-class BlogPostView(APIView):
+class BlogPostView(generics.ListCreateAPIView):
     serializer_class = BlogPostSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
+    queryset = BlogPost.objects.all()
 
-    def get(self, request):
-        context = {'request': request}
-        blog_posts = BlogPost.objects.all()
-        serializer = BlogPostSerializer(blog_posts, many=True, context=context)
-
-        return Response(serializer.data)
-
-    def post(self, request):
-        serializer = BlogPostSerializer(data=request.data, context={'request': request})
-
-        if serializer.is_valid():
-            serializer.save(author=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
 class BlogPostDetailView(APIView):
