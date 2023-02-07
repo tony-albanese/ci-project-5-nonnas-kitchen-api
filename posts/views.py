@@ -1,7 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from rest_framework import status, permissions, generics
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.db.models import Count
+from rest_framework import permissions, generics, filters
 from .models import BlogPost, Like
 from .serializers import BlogPostSerializer, LikeSerializer
 from kitchen.permissions import AuthorPermissions, OwnerPermissions
