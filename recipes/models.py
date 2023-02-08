@@ -45,7 +45,11 @@ class Recipe(models.Model):
     procedure = models.JSONField()
     tags = TaggableManager()
     recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
+    posted_on = models.DateTimeField(auto_now=True)
 
+    class Meta:
+        ordering = ['-posted_on']
+        
     def __str__(self):
         return self.title
 
