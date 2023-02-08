@@ -3,6 +3,7 @@ from rest_framework import permissions, generics, filters
 from .models import BlogPost, Like
 from .serializers import BlogPostSerializer, LikeSerializer
 from kitchen.permissions import AuthorPermissions, OwnerPermissions
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 
@@ -17,7 +18,14 @@ class BlogPostView(generics.ListCreateAPIView):
     ).order_by('-posted_on')
 
     filter_backends = [
-        filters.OrderingFilter
+        filters.OrderingFilter,
+        filters.SearchFilter,
+        DjangoFilterBackend
+    ]
+
+    search_fields = [
+        'author__username',
+        'title'
     ]
 
     ordering_fields = [
