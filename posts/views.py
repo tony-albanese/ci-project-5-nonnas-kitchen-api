@@ -25,7 +25,8 @@ class BlogPostView(generics.ListCreateAPIView):
 
     filterset_fields = [
         'author__follower__following__profile',
-        
+        'likes__owner__profile',
+        'author__profile'
     ]
 
     search_fields = [
