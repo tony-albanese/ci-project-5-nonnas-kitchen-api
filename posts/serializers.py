@@ -9,7 +9,9 @@ class BlogPostSerializer(serializers.ModelSerializer):
     is_author = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='author.profile.id')
     profile_image = serializers.ReadOnlyField(source='author.profile.avatar.url')
-    
+    is_liked = serializers.SerializerMethodField()
+    likes_count = serializers.ReadOnlyField()
+    comments_count = serializers.ReadOnlyField()
 
     def validate_post_image(self, value):
         if value.size > 1024*1024*2:
@@ -26,10 +28,19 @@ class BlogPostSerializer(serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.author
     
+    def get_is_liked(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = Like.objects.filter(blog_post=obj, owner=user).first()
+            return like.id if like else None
+        return None
+    
     class Meta:
         model = BlogPost
         fields = [
-            'id', 'author', 'title',  'body','category', 'posted_on', 'post_image', 'is_author','profile_id','profile_image',
+            'id', 'author', 'title',  'body', 'category', 'posted_on',
+            'post_image', 'is_author', 'profile_id', 'profile_image',
+            'is_liked', 'likes_count', 'comments_count'
         ]
 
 

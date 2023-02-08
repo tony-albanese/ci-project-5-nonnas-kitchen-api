@@ -33,6 +33,10 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want to get a list of followers with an endpoint so that I do not have to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to implement permissions about followers so that I do not have to manually implement security features on the front end.
 
+### Search and Filter
++ As a developer using Nonna's Kitchen backend to build applications, I want to get all the comments that belong to a blogpost so that I can display them to the user without having to query the database.
++ As a developer using Nonna's Kitchen backend to build applications, I want to filter Profiles by follower so that I do not have to manually query the database.
++ As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality for a BlogPost so that I do not have to manually query the database.
 
 # Database Design
 ## Models
@@ -187,6 +191,22 @@ This endpoint allows users to follow and unfollow each other. In addition, one c
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to allow users to unfollow each other so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to get a list of followers with an endpoint so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to implement permissions about followers so that I do not have to manually implement security features on the front end.
+
+## Search and Filter
+Searching and filtering has been added for the BlogPost, Comment, and Profile models. Specifically, one can search a BlogPost by title or author user name. One can also filter the BlogPosts based on category, author, whether its liked, by owner and by follower. The Comments have a filter field so that only the comments belonging to a BlogPost can be displayed. And Profiles can be filtered by follower - a user can see who follows them and the profiles of user they follow.
++ BlogPost Filter Form
+![blogpost filter](repo_images/post_filter_form.png)
++ BlogPost Filter Result
+![blogpost filter result](repo_images/blogpost_filter_result.png)
++ Filtered Comments
+![Filtered Comment](repo_images/filtered_comment.png)
++ Follower Filter
+![Follower Filter](repo_images/follower_filter.png)
+
+
+> + As a developer using Nonna's Kitchen backend to build applications, I want to get all the comments that belong to a blogpost so that I can display them to the user without having to query the database.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to filter Profiles by follower so that I do not have to manually query the database.
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality for a BlogPost so that I do not have to manually query the database.
 
 # Testing
 ## Behavior Driven Development (BDD)

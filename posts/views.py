@@ -1,65 +1,57 @@
-from django.shortcuts import render, get_object_or_404
-from rest_framework import status, permissions, generics
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from django.db.models import Count
+from rest_framework import permissions, generics, filters
 from .models import BlogPost, Like
 from .serializers import BlogPostSerializer, LikeSerializer
 from kitchen.permissions import AuthorPermissions, OwnerPermissions
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 
-class BlogPostView(APIView):
+class BlogPostView(generics.ListCreateAPIView):
     serializer_class = BlogPostSerializer
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
+    queryset = BlogPost.objects.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comment', distinct=True)
+    ).order_by('-posted_on')
 
-    def get(self, request):
-        context = {'request': request}
-        blog_posts = BlogPost.objects.all()
-        serializer = BlogPostSerializer(blog_posts, many=True, context=context)
+    filter_backends = [
+        filters.OrderingFilter,
+        filters.SearchFilter,
+        DjangoFilterBackend
+    ]
 
-        return Response(serializer.data)
+    filterset_fields = [
+        'author__follower__following__profile',
+        'likes__owner__profile',
+        'author__profile',
+        'author',
+        'category'
+    ]
 
-    def post(self, request):
-        serializer = BlogPostSerializer(data=request.data, context={'request': request})
+    search_fields = [
+        'author__username',
+        'title'
+    ]
 
-        if serializer.is_valid():
-            serializer.save(author=request.user)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    ordering_fields = [
+        'likes_count',
+        'comments_count',
+    ]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
 
 
-class BlogPostDetailView(APIView):
+class BlogPostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [AuthorPermissions]
     serializer_class = BlogPostSerializer
-
-    def get(self, request, id):
-        blog_post = get_object_or_404(BlogPost, id=id)
-        self.check_object_permissions(self.request, blog_post)
-        serializer = BlogPostSerializer(
-            blog_post, context={'request': request}
-        )
-        return Response(serializer.data)
-    
-    def put(self, request, id):
-        blog_post = get_object_or_404(BlogPost, id=id)
-        self.check_object_permissions(self.request, blog_post)
-        serializer = BlogPostSerializer(
-            blog_post, data=request.data, context={'request': request}
-        )
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, id):
-        blog_post = get_object_or_404(BlogPost, id=id)
-        self.check_object_permissions(self.request, blog_post)
-        blog_post.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    queryset = BlogPost.objects.annotate(
+        likes_count=Count('likes', distinct=True),
+        comments_count=Count('comment', distinct=True)
+    ).order_by('-posted_on')
 
 
 class LikeList(generics.ListCreateAPIView):
