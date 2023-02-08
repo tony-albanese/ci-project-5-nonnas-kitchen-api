@@ -34,6 +34,7 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to implement permissions about followers so that I do not have to manually implement security features on the front end.
 
 
+
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -187,6 +188,12 @@ This endpoint allows users to follow and unfollow each other. In addition, one c
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to allow users to unfollow each other so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to get a list of followers with an endpoint so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to the backend to implement permissions about followers so that I do not have to manually implement security features on the front end.
+
+## Search and Filter
+**Need to Show Features and Testing**
+As a developer using Nonna's Kitchen backend to build applications, I want to get all the comments that belong to a blogpost so that I can display them to the user without having to query the database.
+As a developer using Nonna's Kitchen backend to build applications, I want to **search and filter Profiles** so that I do not have to manually query the database.
+As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality so that I do not have to manually query the database.
 
 # Testing
 ## Behavior Driven Development (BDD)
