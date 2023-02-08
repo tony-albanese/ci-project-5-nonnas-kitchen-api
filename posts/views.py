@@ -23,6 +23,11 @@ class BlogPostView(generics.ListCreateAPIView):
         DjangoFilterBackend
     ]
 
+    filterset_fields = [
+        'author__follower__following__profile',
+        
+    ]
+
     search_fields = [
         'author__username',
         'title'
