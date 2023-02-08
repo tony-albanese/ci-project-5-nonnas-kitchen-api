@@ -25,7 +25,8 @@ class ProfileView(generics.ListAPIView):
     ]
 
     filterset_fields = [
-        'owner__following__follower__profile'
+        'owner__following__follower__profile',
+        'owner__follower__following__profile'
     ]
 
     ordering_fields = [
