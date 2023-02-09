@@ -48,3 +48,45 @@ class RecipeViewTests(APITestCase):
         }
         response = self.client.post('/recipes/', recipe_data)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class RecipeDetailViewTests(APITestCase):
+    def setUp(self):
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+    def test_can_retrieve_recipe_with_valid_id(self):
+        pass
+
+    def test_cannot_retrieve_recipe_with_invalid_id(self):
+        pass
+
+    def test_user_can_update_own_recipe(self):
+        pass
+
+    def test_user_cant_update_another_users_recipe(self):
+        pass
+
+    def test_user_can_delete_their_own_recipe(self):
+        pass
+
+    def test_user_cannot_delete_recipe_not_their_own(self):
+        pass
