@@ -39,14 +39,13 @@ class Recipe(models.Model):
     dish_type = models.CharField(max_length=7, choices=DISH_TYPE, default='app')
     difficulty = models.CharField(max_length=6, choices=DIFFICULTY, default='easy')
     time = models.IntegerField(default=1)
-    time_unit = models.CharField(max_length=3, default='hr')
+    time_unit = models.CharField(max_length=3, default='hr', choices=TIME_UNITS)
     servings = models.IntegerField(default=1)
     ingredients_list = models.JSONField()
     procedure = models.JSONField()
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
     recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
     posted_on = models.DateTimeField(auto_now=True)
-
 
     class Meta:
         ordering = ['-posted_on']
