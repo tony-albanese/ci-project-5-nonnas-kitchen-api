@@ -47,6 +47,7 @@ class Recipe(models.Model):
     recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
     posted_on = models.DateTimeField(auto_now=True)
 
+
     class Meta:
         ordering = ['-posted_on']
         
@@ -55,9 +56,19 @@ class Recipe(models.Model):
 
 
 class RecipeLike(AbstractLike):
-    pass
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_likes', null=True)
+
+    class Meta:
+        unique_together = ['owner', 'recipe']
+
+    def __str__(self):
+        return f"Owner: {self.owner} Liked recipe: {self.title}"
 
 
 class RecipeRating(AbstractRating):
-    pass
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, null=True
+     )
 
+    def __str__(self):
+        return f"{self.recipe.title}: Rating {self.rating}"
