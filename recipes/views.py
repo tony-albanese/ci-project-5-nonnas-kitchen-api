@@ -8,4 +8,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 
 class RecipeView(generics.ListCreateAPIView):
-    pass
+    serializer_class = RecipeSerializer
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly
+    ]
+    queryset = Recipe.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
