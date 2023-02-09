@@ -158,3 +158,21 @@ class TestFollowerDetailView(APITestCase):
     def test_cant_unfollow_if_not_logged_in(self):
         pass
 ```
+
+
+## recipes endpoint test cases
+```
+class RecipeViewTests(APITestCase):
+    def setUp(self):
+        User.objects.create_user(username='test_user', password='password')
+    
+    def test_user_can_get_list_of_recipes(self):
+        pass
+
+    def test_logged_in_user_can_create_recipe(self):
+        pass
+
+    def test_anonymous_user_cant_create_recipe(self):
+        pass
+```
+
