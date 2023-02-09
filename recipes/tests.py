@@ -74,19 +74,48 @@ class RecipeDetailViewTests(APITestCase):
         )
 
     def test_can_retrieve_recipe_with_valid_id(self):
-        pass
+        response = self.client.get('/recipes/1/')
+        self.assertEqual(response.data['title'], 'title 1')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_cannot_retrieve_recipe_with_invalid_id(self):
-        pass
+        response = self.client.get('/recipes/1533434/')
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_user_can_update_own_recipe(self):
-        pass
+        self.client.login(username='user_a', password='pass')
+
+        updated_recipe_data = {
+            'title': 'a new title',
+            'description': 'a description',
+            'ingredients_list': '{}',
+            'procedure': '{}',
+            'tags': "tag"
+        }
+        response = self.client.put('/recipes/1/', updated_recipe_data)
+        post = Recipe.objects.filter(id=1).first()
+        self.assertEqual(post.title, 'a new title')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_cant_update_another_users_recipe(self):
-        pass
+        self.client.login(username='user_b', password='pass')
+
+        updated_recipe_data = {
+            'title': 'a new title',
+            'description': 'a description',
+            'ingredients_list': '{}',
+            'procedure': '{}',
+            'tags': "tag"
+        }
+        response = self.client.put('/recipes/1/', updated_recipe_data)
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_can_delete_their_own_recipe(self):
-        pass
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/recipes/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cannot_delete_recipe_not_their_own(self):
-        pass
+        self.client.login(username='user_b', password='pass')
+        response = self.client.delete('/recipes/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
