@@ -14,7 +14,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     '''
     author = serializers.ReadOnlyField(source='author.username')
     is_author = serializers.SerializerMethodField()
-    # dish_type_name = serializers.SerializerMethodField()
+    dish_type_name = serializers.SerializerMethodField()
     profile_id = serializers.ReadOnlyField(source='author.profile.id')
     profile_image = serializers.ReadOnlyField(source='author.profile.avatar.url')
     tags = TagListSerializerField()
@@ -34,11 +34,14 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
         request = self.context['request']
         return request.user == obj.author
 
+    def get_dish_type_name(self, obj):
+        return obj.get_dish_type_display()
+
     class Meta:
         model = Recipe
         fields = [
-            'id', 'author','is_author', 'title', 'description', 'dish_type',
-            'difficulty', 'time', 'time_unit', 'servings',
+            'id', 'author', 'is_author', 'title', 'description', 'dish_type',
+            'dish_type_name', 'difficulty', 'time', 'time_unit', 'servings',
             'ingredients_list', 'procedure', 'tags', 'recipe_image', 
             'profile_id', 'profile_image'
         ]
