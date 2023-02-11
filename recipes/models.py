@@ -61,7 +61,7 @@ class RecipeLike(AbstractLike):
         unique_together = ['owner', 'recipe']
 
     def __str__(self):
-        return f"Owner: {self.owner} Liked recipe: {self.title}"
+        return f"Owner: {self.owner} Liked recipe: {self.recipe.title}"
 
 
 class RecipeRating(AbstractRating):
