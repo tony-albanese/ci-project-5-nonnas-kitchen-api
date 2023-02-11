@@ -1,7 +1,7 @@
 from django.db.models import Count
 from rest_framework import permissions, generics, filters
-from .models import Recipe
-from .serializers import RecipeSerializer
+from .models import Recipe, RecipeLike
+from .serializers import RecipeSerializer, RecipeLikeSerializer
 from kitchen.permissions import AuthorPermissions, OwnerPermissions
 from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
@@ -43,3 +43,15 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = RecipeSerializer
     queryset = Recipe.objects.all()
     
+
+class RecipeLikeList(generics.ListCreateAPIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    serializer_class = RecipeLikeSerializer
+    queryset = RecipeLike.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class RecipeLikeDetailView(generics.RetrieveDestroyAPIView):
+    pass
