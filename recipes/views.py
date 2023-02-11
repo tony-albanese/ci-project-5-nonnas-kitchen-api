@@ -17,6 +17,7 @@ class RecipeView(generics.ListCreateAPIView):
     ).order_by('-posted_on')
 
     filter_backends = [
+        filters.OrderingFilter,
         filters.SearchFilter,
         DjangoFilterBackend
     ]
@@ -27,11 +28,15 @@ class RecipeView(generics.ListCreateAPIView):
     ]
 
     filterset_fields = [
-
         'author',
         'dish_type',
         'difficulty',
-        'author__profile'  
+        'author__profile',
+        'recipe_likes__owner__profile'  
+    ]
+
+    ordering_fields = [
+        'likes_count'
     ]
 
     def perform_create(self, serializer):
