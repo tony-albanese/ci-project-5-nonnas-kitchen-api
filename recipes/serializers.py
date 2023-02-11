@@ -1,7 +1,7 @@
 from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from django.db import IntegrityError
 from rest_framework import serializers
-from .models import Recipe
+from .models import Recipe, RecipeLike
 
 
 class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -57,3 +57,19 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
             'ingredients_list', 'procedure', 'tags', 'recipe_image', 
             'profile_id', 'profile_image', 'likes_count', 'like_id'
         ]
+
+
+class RecipeLikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RecipeLike
+        fields = [
+            'owner', 'created_on', 'recipe'
+        ]
+
+    def create(self, validated_data):
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError({
+                'detail': 'possible duplicate like'
+            })
