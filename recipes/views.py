@@ -24,13 +24,13 @@ class RecipeView(generics.ListCreateAPIView):
     search_fields = [
         'author__username',
         'title',
-        'dish_type',
-        'difficulty'
     ]
 
     filterset_fields = [
 
         'author',
+        'dish_type',
+        'difficulty',
         'author__profile'  
     ]
 
