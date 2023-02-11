@@ -1,4 +1,4 @@
-from .models import Recipe
+from .models import Recipe, RecipeLike
 from kitchen_user.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -119,3 +119,56 @@ class RecipeDetailViewTests(APITestCase):
         self.client.login(username='user_b', password='pass')
         response = self.client.delete('/recipes/1/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+
+class TestRecipeLikes(APITestCase):
+
+    def setUp(self):
+        # Create two users.
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        # Create two Recipe objects.
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        # Get references to the newly created recipes
+        recipe_a = Recipe.objects.get(id=1)
+        recipe_b = Recipe.objects.get(id=2)
+
+        # Create two RecipeLikes. user_a will like both recipes.
+        RecipeLike.objects.create(owner=user_a, recipe=recipe_a)
+        RecipeLike.objects.create(owner=user_a, recipe=recipe_b)
+
+    def test_user_can_get_recipe_likes(self):
+        pass
+
+    def test_logged_in_user_can_like_a_recipe(self):
+        pass
+
+    def test_unauthenticated_user_cant_like_recipe(self):
+        pass
+
+    def test_user_can_delete_own__recipe_like(self):
+        pass
+
+    def test_user_cannot_delete_other_recipe_likes(self):
+        pass
+
+    def test_cant_have_duplicate_recipe_likes(self):
+        pass
