@@ -12,7 +12,9 @@ class RecipeView(generics.ListCreateAPIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly
     ]
-    queryset = Recipe.objects.all()
+    queryset = Recipe.objects.annotate(
+        likes_count=Count('recipe_likes', distinct=True)
+    ).order_by('-posted_on')
 
     filter_backends = [
         filters.SearchFilter,
