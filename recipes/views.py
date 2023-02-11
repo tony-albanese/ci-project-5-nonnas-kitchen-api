@@ -54,4 +54,6 @@ class RecipeLikeList(generics.ListCreateAPIView):
 
 
 class RecipeLikeDetailView(generics.RetrieveDestroyAPIView):
-    pass
+    permission_classes = [OwnerPermissions]
+    serializer_class = RecipeLikeSerializer
+    queryset = RecipeLike.objects.all()
