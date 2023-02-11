@@ -5,13 +5,7 @@ from .models import Recipe, RecipeLike
 
 
 class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
-    '''
-    What do I want to display to the user in a response?
-    Cacluated fields:
-    number of likes
-    likes_count
-    number of comments
-    '''
+
     author = serializers.ReadOnlyField(source='author.username')
     is_author = serializers.SerializerMethodField()
     dish_type_name = serializers.SerializerMethodField()
