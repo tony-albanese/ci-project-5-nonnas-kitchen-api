@@ -14,6 +14,16 @@ class RecipeView(generics.ListCreateAPIView):
     ]
     queryset = Recipe.objects.all()
 
+    filter_backends = [
+        filters.SearchFilter
+    ]
+
+    search_fields = [
+        'author__username',
+        'title',
+        'dish_type',
+        'difficulty'
+    ]
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
