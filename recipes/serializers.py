@@ -43,7 +43,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     def get_like_id(self, obj):
         user = self.context['request'].user
         if user.is_authenticated:
-            like = Like.objects.filter(
+            like = RecipeLike.objects.filter(
                 owner=user, recipe=obj
             ).first()
             return like.id if like else None
