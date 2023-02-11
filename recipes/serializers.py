@@ -15,9 +15,12 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     author = serializers.ReadOnlyField(source='author.username')
     is_author = serializers.SerializerMethodField()
     dish_type_name = serializers.SerializerMethodField()
+    posted_on = serializers.ReadOnlyField()
     profile_id = serializers.ReadOnlyField(source='author.profile.id')
     profile_image = serializers.ReadOnlyField(source='author.profile.avatar.url')
     tags = TagListSerializerField()
+    likes_count = serializers.ReadOnlyField()
+    like_id = serializers.SerializerMethodField()
     
     def validate_recipe_image(self, value):
         if value.size > 1024*1024*2:
@@ -37,11 +40,20 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     def get_dish_type_name(self, obj):
         return obj.get_dish_type_display()
 
+    def get_like_id(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = Like.objects.filter(
+                owner=user, recipe=obj
+            ).first()
+            return like.id if like else None
+        return None
+
     class Meta:
         model = Recipe
         fields = [
-            'id', 'author', 'is_author', 'title', 'description', 'dish_type',
+            'id', 'author', 'is_author', 'posted_on', 'title', 'description', 'dish_type',
             'dish_type_name', 'difficulty', 'time', 'time_unit', 'servings',
             'ingredients_list', 'procedure', 'tags', 'recipe_image', 
-            'profile_id', 'profile_image'
+            'profile_id', 'profile_image', 'likes_count', 'like_id'
         ]
