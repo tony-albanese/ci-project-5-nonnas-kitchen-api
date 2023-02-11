@@ -60,10 +60,12 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
 
 
 class RecipeLikeSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    
     class Meta:
         model = RecipeLike
         fields = [
-            'owner', 'created_on', 'recipe'
+            'id', 'owner', 'created_on', 'recipe'
         ]
 
     def create(self, validated_data):
