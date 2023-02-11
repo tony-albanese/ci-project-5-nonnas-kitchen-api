@@ -53,6 +53,14 @@ settings.py was modified with the following setting so that django authorizaton 
 AUTH_USER_MODEL = 'kitchen_user.User'
 ```
 
+The **AbstractLike** model encapsualtes the information common to all likes. This model is marked as abstract so that a table will not be created for it. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes.  Other types of Like models can inherit from this model and add the fields needed. 
+
+|AbstractLike ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|owner|
+|DateTimeField|created_on|
+
 The **Profile** model encapsulates the extra data to enhance the standard information in the User model. The Profile contains additional fields for a biography, an avatar, and a cooking speciality.
 |Profile ||
 |-----|----|
@@ -87,13 +95,11 @@ The **Comment** model encapsulates the information required for a User to leave 
 |DateTimeField|created_on|
 |TextField|body|
 
-The **Like** model encapsulates the information required for a User to like a BlogPost. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes. The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
+The **Like** model encapsulates the information required for a User to like a BlogPost. It inherits from AbstractBlogPost  The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
 |Like ||
 |-----|----|
 |type|field name|
-|ForeignKey(User)|owner|
 |ForeignKey(BlogPost)|blog_post|
-|DateTimeField|created_on|
 
 
 The **Follower** model encapsulates the information required for a User to follow another User. The following field is the User that is following a User. The follower field is the User that is followed by the user in the following field.
@@ -103,6 +109,33 @@ The **Follower** model encapsulates the information required for a User to follo
 |ForeignKey(User)|following|
 |ForeignKey(User)|follower|
 |DateTimeField|followed_on|
+
+
+The **Recipe** model encapsulates the information required for a Recipe object in the database.
+|Like ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|author|
+|CharField|title|
+|TextField|description|
+|CharField(ChoiceField)|dish_type|
+|CharField(ChoiceField)|difficulty|
+|IntegerField|time|
+|CharField(ChoiceField)|time_unit|
+|IntegerField|servings|
+|JSONField|ingredients|
+|JSONField|procedure|
+|TaggableManager|tags|
+|ImageField|recipe_image|
+|DataTimeField|posted_on|
+
+
+The **RecipeLike** model encapsulates the information required for a User to like a Recipe. The model inherits from the AbstractLike model. The recipe field will link this model to a Recipe model.
+
+|RecipeLike ||
+|-----|----|
+|type|field name|
+|ForeignKey(Recipe)|recipe|
 
 # Features
 ## Profiles Endpoint
