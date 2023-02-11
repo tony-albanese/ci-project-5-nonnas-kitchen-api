@@ -247,6 +247,26 @@ Searching and filtering has been added for the BlogPost, Comment, and Profile mo
 > + As a developer using Nonna's Kitchen backend to build applications, I want to filter Profiles by follower so that I do not have to manually query the database.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality for a BlogPost so that I do not have to manually query the database.
 
+
+## Recipe endpoint
+This enpoint allows a User to enter a Recipe if they're logged in or to get a list of all the recipes if they are not. A User can update or delete a recipe if they are the owner. A user can also like a recipe if they are logged in and see how many likes a recipe can have. Recipes can be searched by title and type and filtered by type, author, difficulty, and author profile.  A user can remove their own like from a Recipe. This functionality is tested in the [TDD test cases](test_tdd_cases.md) file.
+
++ Recipes List
+![recipes list](repo_images/recipes_list.png)
++ Add a recipe if User logged in
+![add recipe login](repo_images/add_recipe_login.png)
++ Search and filter Recipes
+![search and filter recipes](repo_images/recipe_search_filter.png)
++ See list of Likes for Recipe
+![recipe like list](repo_images/recipe_likes_list.png)
++ Like a Recipe if logged in.
+![like recipe if logged in](repo_images/recipe_liked_logged_in.png)
+
+> + As a developer using Nonna's Kitchen backend to build applications, I want and endpoin to perform CRUD operations on a RECIPE so that I do not have query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
+
 # Testing
 ## Behavior Driven Development (BDD)
 The testing done here is BDD - each test is described as a story in which a description of the software requirements, the user actions, and the expected outcome are given along with a result of PASS or FAIL. To reduce the length of the readme, here is a link to the [testing tables](test_cases.md) describing the various test cases.
