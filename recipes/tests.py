@@ -156,19 +156,36 @@ class TestRecipeLikes(APITestCase):
         RecipeLike.objects.create(owner=user_a, recipe=recipe_b)
 
     def test_user_can_get_recipe_likes(self):
-        pass
+        response = self.client.get('/recipes/likes/')
+        count = RecipeLike.objects.count()
+        self.assertEqual(count, 2)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_logged_in_user_can_like_a_recipe(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.post('/recipes/likes/', {'owner': current_user, 'recipe':1})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_unauthenticated_user_cant_like_recipe(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        response = self.client.post('/recipes/likes/', {'owner': current_user, 'blog_post':1})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_user_can_delete_own__recipe_like(self):
-        pass
+    def test_user_can_delete_own_recipe_like(self):
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/recipes/likes/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cannot_delete_other_recipe_likes(self):
-        pass
+        # current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.delete('/recipes/likes/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_cant_have_duplicate_recipe_likes(self):
-        pass
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.post('/recipes/likes/', {'owner': current_user, 'blog_post':1})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
