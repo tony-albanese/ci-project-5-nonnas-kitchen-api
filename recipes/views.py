@@ -77,3 +77,8 @@ class RecipeRatingList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+
+class RecipeRatingDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [OwnerPermissions]
+    serializer_class = RecipeRatingSerializer
+    queryset = RecipeRating.objects.all()
