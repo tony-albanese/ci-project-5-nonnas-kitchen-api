@@ -249,6 +249,13 @@ Searching and filtering has been added for the BlogPost, Comment, and Profile mo
 
 
 ## Recipe endpoint
+```
+POST recipes/
+GET recipes/
+GET recipes/<int:id>/
+PUT recipes/<int:id>/
+DELETE recipes/<int:id>/
+```
 This enpoint allows a User to enter a Recipe if they're logged in or to get a list of all the recipes if they are not. A User can update or delete a recipe if they are the owner. A user can also like a recipe if they are logged in and see how many likes a recipe can have. Recipes can be searched by title and type and filtered by type, author, difficulty, and author profile.  A user can remove their own like from a Recipe. This functionality is tested in the [TDD test cases](test_tdd_cases.md) file.
 
 + Recipes List
@@ -268,6 +275,14 @@ This enpoint allows a User to enter a Recipe if they're logged in or to get a li
 > + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
 
 + Commenting on a recipe
+```
+POST recipes/comments/
+GET recipes/comments/
+GET recipes/comments/<int:id>/
+PUT recipes/comments<int:id>/
+DELETE recipes/comments<int:id>/
+```
+This endpoint allows users to leave a comment on a recipe if they are logged in. A user can get a list of all the recipe comments. Permissions are implemented so that a user can only update and delete their own comments.
 ![recipe comment](repo_images/recipe_comment.png) 
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
 
