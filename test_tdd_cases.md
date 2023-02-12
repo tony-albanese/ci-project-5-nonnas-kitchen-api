@@ -402,6 +402,9 @@ class TestRecipeRatings(APITestCase):
     def test_user_can_update_rating_value(self):
         pass
 
+    def test_user_cannot_update_others_rating(self):
+        pass
+
     def test_user_can_delete_own_rating(self):
         pass
 
