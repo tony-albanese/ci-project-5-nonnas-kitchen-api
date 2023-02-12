@@ -315,6 +315,22 @@ This endpoint allows users to leave a comment on a recipe if they are logged in.
 ![recipe comment](repo_images/recipe_comment.png) 
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
 
+## Recipe Rating Endpoint
+```
+POST recipes/ratings/
+GET recipes/ratings/
+GET recipes/ratings/<int:id>/
+PUT recipes/ratings<int:id>/
+DELETE recipes/ratings<int:id>/
+```
+This endpoint allows a User to rate a Recipe. A valid rating must be an integer between 1 and 5. A User can get a list of ratings and create a new rating if they are logged in. They can update a rating if they are the owner. A user is prevented from updating or deleting a Rating they do not own. They cannot leave multiple ratings for a Recipe, but they can update the value of a current rating.
+![ratings list](repo_images/recipe_rating.png)  
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaulate content without having to query the database myself.  
+A field for the average rating has also been added to the RecipeList view to display the average rating associated for a recipe.
+![average rating](repo_images/average_rating.png)
+
+
+
 # Agile Workflow
 
 
