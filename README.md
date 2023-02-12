@@ -42,8 +42,8 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want and endpoin to perform CRUD operations on a RECIPE so that I do not have query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
-+ As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
-
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -266,6 +266,10 @@ This enpoint allows a User to enter a Recipe if they're logged in or to get a li
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
+
++ Commenting on a recipe
+![recipe comment](repo_images/recipe_comment.png) 
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
 
 # Agile Workflow
 
