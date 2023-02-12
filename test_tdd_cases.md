@@ -384,6 +384,9 @@ class TestRecipeRatings(APITestCase):
     def test_logged_in_user_can_leave_a_rating(self):
         pass
 
+    def test_anonymous_user_cannot_leave_a_rating(self):
+        pass
+        
     def test_rating_value_cannot_be_zero(self):
         pass
 
