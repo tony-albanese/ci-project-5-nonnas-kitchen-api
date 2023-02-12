@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from kitchen_user.models import User
 from base_models.models import AbstractLike, AbstractRating
 from taggit.managers import TaggableManager
@@ -52,6 +53,9 @@ class Recipe(models.Model):
         
     def __str__(self):
         return self.title
+
+    def average_rating(self):
+        return RecipeRating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"]
 
 
 class RecipeLike(AbstractLike):
