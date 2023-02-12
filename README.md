@@ -61,6 +61,14 @@ The **AbstractLike** model encapsualtes the information common to all likes. Thi
 |ForeignKey(User)|owner|
 |DateTimeField|created_on|
 
+The **AbstractComment** model encapsulates the information common to all comments. This model is marked as abstract so that a table will not be created for it. The author field is a one-to-many realationhip with a User since each Comment can only have one author.
+|AbstractComment ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|author|
+|DateTimeField|created_on|
+|TextField|body|
+
 The **Profile** model encapsulates the extra data to enhance the standard information in the User model. The Profile contains additional fields for a biography, an avatar, and a cooking speciality.
 |Profile ||
 |-----|----|
@@ -86,14 +94,12 @@ The **BlogPost** model encapsulates the information a user wants to share on the
 |UrlField|link|
 |CharField|category|
 
-The **Comment** model encapsulates the information required for a User to leave a comment on a BlogPost. The author field is a one-to-many realationhip with a User since each Comment can only have one author. There is a also a one-to-money relationship with the BlogPost because each Comment can only belong to one BlogPost but a BlogPost can have many Comments.
+The **Comment** model encapsulates the information required for a User to leave a comment on a BlogPost. It extends the AbstractComment model.  There is a also a one-to-money relationship with the BlogPost because each Comment can only belong to one BlogPost but a BlogPost can have many Comments.
 |Comment ||
 |-----|----|
 |type|field name|
-|ForeignKey(User)|author|
 |ForeignKey(BlogPost)|blog_post|
-|DateTimeField|created_on|
-|TextField|body|
+
 
 The **Like** model encapsulates the information required for a User to like a BlogPost. It inherits from AbstractBlogPost  The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
 |Like ||
@@ -133,6 +139,12 @@ The **Recipe** model encapsulates the information required for a Recipe object i
 The **RecipeLike** model encapsulates the information required for a User to like a Recipe. The model inherits from the AbstractLike model. The recipe field will link this model to a Recipe model.
 
 |RecipeLike ||
+|-----|----|
+|type|field name|
+|ForeignKey(Recipe)|recipe|
+
+The **RecipeComment** model encapsulates the information required for a User to leave a comment on a Recipe. It extends the AbstractComment model.  There is a also a one-to-money relationship with the Recipe because each RecipeComment can only belong to one Recipe but a Recipe can have many RecipeComments.
+|Comment ||
 |-----|----|
 |type|field name|
 |ForeignKey(Recipe)|recipe|
