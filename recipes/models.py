@@ -71,3 +71,6 @@ class RecipeRating(AbstractRating):
 
     def __str__(self):
         return f"{self.recipe.title}: Rating {self.rating}"
+
+    class Meta:
+        unique_together = ['owner', 'recipe']
