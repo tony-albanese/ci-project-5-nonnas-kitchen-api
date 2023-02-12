@@ -147,15 +147,6 @@ class TestRecipeLikes(APITestCase):
             tags=""
         )
 
-        Recipe.objects.create(
-            author=user_a,
-            title='title 3',
-            description='description 3',
-            ingredients_list='{}',
-            procedure='{}',
-            tags=""
-        )
-
         # Get references to the newly created recipes
         recipe_a = Recipe.objects.get(id=1)
         recipe_b = Recipe.objects.get(id=2)
@@ -206,7 +197,7 @@ class TestRecipeRatings(APITestCase):
         user_a = User.objects.create_user(username='user_a', password='pass')
         user_b = User.objects.create_user(username='user_b', password='pass')
 
-        # Create two Recipe objects.
+        # Create three Recipe objects.
         Recipe.objects.create(
             author=user_a,
             title='title 1',
