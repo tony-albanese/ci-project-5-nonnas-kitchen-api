@@ -126,13 +126,21 @@ class RecipeCommentViewTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_can_update_their_own_recipe_comment(self):
-        pass
+        self.client.login(username='user_a', password='pass')
+        response = self.client.put('/recipes/comments/1/', {'body': 'Updated comment body'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_user_cannot_update_recipe_comment_if_not_owner(self):
-        pass
+        self.client.login(username='user_b', password='pass')
+        response = self.client.put('/recipes/comments/1/', {'body': 'Updated comment body'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_can_delete_their_own_recipe_comment(self):
-        pass
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/recipes/comments/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cannot_delete_recipe_comment_if_not_owner(self):
-        pass
+        self.client.login(username='user_b', password='pass')
+        response = self.client.delete('/recipes/comments/1/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
