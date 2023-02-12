@@ -1,7 +1,7 @@
 from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from django.db import IntegrityError
 from rest_framework import serializers
-from .models import Recipe, RecipeLike, RecipeRating
+from .models import Recipe, RecipeLike
 
 
 class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -71,31 +71,3 @@ class RecipeLikeSerializer(serializers.ModelSerializer):
                 'detail': 'possible duplicate like'
             })
 
-
-class RecipeRatingSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
-    is_owner = serializers.SerializerMethodField()
-
-    class Meta:
-        model = RecipeRating
-        fields = [
-            'id', 'owner', 'is_owner', 'recipe', 'rating'
-        ]
-
-    def validate_rating(self, value):
-        if value < 0 or value > 5:
-            raise serializers.ValidationError(
-                'Value out of range for rating.'
-            )
-
-    def get_is_owner(self, obj):
-        request = self.context['request']
-        return request.user == obj.owner
-
-    def create(self, validated_data):
-        try:
-            return super().create(validated_data)
-        except IntegrityError:
-            raise serializers.ValidationError({
-                'detail': 'possible duplicate rating'
-            })

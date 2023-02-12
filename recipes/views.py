@@ -1,7 +1,7 @@
 from django.db.models import Count
 from rest_framework import permissions, generics, filters
-from .models import Recipe, RecipeLike, RecipeRating
-from .serializers import RecipeSerializer, RecipeLikeSerializer, RecipeRatingSerializer
+from .models import Recipe, RecipeLike
+from .serializers import RecipeSerializer, RecipeLikeSerializer
 from kitchen.permissions import AuthorPermissions, OwnerPermissions
 from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
@@ -14,7 +14,7 @@ class RecipeView(generics.ListCreateAPIView):
     ]
     queryset = Recipe.objects.annotate(
         likes_count=Count('recipe_likes', distinct=True),
-        comments_count=Count('recipecomment', distinct=True)
+        comments_count=Count('recipecomment', distinct=True),
     ).order_by('-posted_on')
 
     filter_backends = [
@@ -69,10 +69,3 @@ class RecipeLikeDetailView(generics.RetrieveDestroyAPIView):
     queryset = RecipeLike.objects.all()
 
 
-class RecipeRatingList(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    serializer_class = RecipeRatingSerializer
-    queryset = RecipeRating.objects.all()
-
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
