@@ -74,6 +74,14 @@ class RecipeRatingList(generics.ListCreateAPIView):
     serializer_class = RecipeRatingSerializer
     queryset = RecipeRating.objects.all()
 
+    filter_backends = [
+        DjangoFilterBackend
+    ]
+
+    filterset_fields = [
+        'recipe'
+    ]
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
