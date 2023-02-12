@@ -3,7 +3,7 @@ from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from kitchen.permissions import AuthorPermissions
 from .models import Comment, RecipeComment
-from .serializers import CommentSerializer, CommentDetailSerializer, RecipeCommentSerializer
+from .serializers import CommentSerializer, CommentDetailSerializer, RecipeCommentSerializer, RecipeCommentDetailSerializer
 # Create your views here.
 
 
@@ -48,3 +48,9 @@ class RecipeCommentList(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+
+
+class RecipeCommentDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [AuthorPermissions]
+    serializer_class = RecipeCommentDetailSerializer
+    queryset = RecipeComment.objects.all()
