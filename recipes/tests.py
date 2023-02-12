@@ -128,7 +128,7 @@ class TestRecipeLikes(APITestCase):
         user_a = User.objects.create_user(username='user_a', password='pass')
         user_b = User.objects.create_user(username='user_b', password='pass')
 
-        # Create two Recipe objects.
+        # Create three Recipe objects.
         Recipe.objects.create(
             author=user_a,
             title='title 1',
@@ -142,6 +142,15 @@ class TestRecipeLikes(APITestCase):
             author=user_a,
             title='title 2',
             description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 3',
+            description='description 3',
             ingredients_list='{}',
             procedure='{}',
             tags=""
@@ -226,7 +235,10 @@ class TestRecipeRatings(APITestCase):
         RecipeRating.objects.create(owner=user_b, rating=4, recipe=recipe_b)
 
     def test_user_get_list_of_recipe_ratings(self):
-        pass
+        response = self.client.get('/recipes/ratings/')
+        count = RecipeRating.objects.count()
+        self.assertEqual(count, 3)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_logged_in_user_can_leave_a_rating(self):
         pass
