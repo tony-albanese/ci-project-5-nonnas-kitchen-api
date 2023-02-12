@@ -67,5 +67,8 @@ class RecipeLike(AbstractLike):
 class RecipeRating(AbstractRating):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_ratings', null=True)
 
+    class Meta:
+        unique_together = ['owner', 'recipe']
+
     def __str__(self):
         return f"{self.recipe.title} Rating: {self.rating}"
