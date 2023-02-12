@@ -16,6 +16,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     likes_count = serializers.ReadOnlyField()
     like_id = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
+    ratings_count = serializers.ReadOnlyField()
     
     def validate_recipe_image(self, value):
         if value.size > 1024*1024*2:
@@ -50,7 +51,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
             'id', 'author', 'is_author', 'posted_on', 'title', 'description', 'dish_type',
             'dish_type_name', 'difficulty', 'time', 'time_unit', 'servings',
             'ingredients_list', 'procedure', 'tags', 'recipe_image', 
-            'profile_id', 'profile_image', 'likes_count', 'like_id', 'comments_count'
+            'profile_id', 'profile_image', 'likes_count', 'like_id', 'comments_count', 'ratings_count'
         ]
 
 

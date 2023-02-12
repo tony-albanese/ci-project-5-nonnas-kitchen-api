@@ -15,6 +15,7 @@ class RecipeView(generics.ListCreateAPIView):
     queryset = Recipe.objects.annotate(
         likes_count=Count('recipe_likes', distinct=True),
         comments_count=Count('recipecomment', distinct=True),
+        ratings_count=Count('recipe_ratings', distinct=True)
     ).order_by('-posted_on')
 
     filter_backends = [
