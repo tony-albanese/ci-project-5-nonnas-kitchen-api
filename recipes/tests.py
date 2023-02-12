@@ -1,4 +1,4 @@
-from .models import Recipe, RecipeLike
+from .models import Recipe, RecipeLike, RecipeRating
 from kitchen_user.models import User
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -189,3 +189,35 @@ class TestRecipeLikes(APITestCase):
         self.client.login(username='user_a', password='pass')
         response = self.client.post('/recipes/likes/', {'owner': current_user, 'blog_post':1})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class TestRecipeRatings(APITestCase):
+    def setUp(self):
+        pass
+
+    def test_user_get_list_of_recipe_ratings(self):
+        pass
+
+    def test_logged_in_user_can_leave_a_rating(self):
+        pass
+
+    def test_rating_value_cannot_be_zero(self):
+        pass
+
+    def test_rating_value_cannot_be_negative(self):
+        pass
+    
+    def test_rating_value_cannot_be_larger_than_five(sefl):
+        pass
+
+    def test_user_cannot_rate_same_recipe_twice(self):
+        pass
+    
+    def test_user_can_update_rating_value(self):
+        pass
+
+    def test_user_can_delete_own_rating(self):
+        pass
+
+    def test_user_cannot_delete_others_rating(self):
+        pass
