@@ -18,7 +18,6 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_author')
     body = models.TextField()
-    ratings = models.ManyToManyField(User, blank=True, related_name='post_ratings')
     posted_on = models.DateTimeField(auto_now=True)
     post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
     category = models.CharField(max_length=5, choices=CATEGORIES, default='anec')
@@ -29,16 +28,6 @@ class BlogPost(models.Model):
     def __str__(self):
         return self.title
     
-    def average_rating(self):
-        return Rating.objects.filter(blog_post=self).aggregate(Avg("rating")["rating__avg"])
-
-
-class Rating(AbstractRating):
-    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f"{self.blog_post.title}: {self.rating}"
-
 
 class Like(AbstractLike):
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='likes')
