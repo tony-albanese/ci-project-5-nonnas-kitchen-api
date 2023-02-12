@@ -275,3 +275,59 @@ class TestRecipeLikes(APITestCase):
     def test_cant_have_duplicate_recipe_likes(self):
         pass
 ```
+
+## Recipe Comment tests
+```
+class RecipeCommentViewTests(APITestCase):
+    def setUp(self):
+        User.objects.create_user(username='test_user', password='password')
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        # Create some recipes
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+        # Create some commments.
+        recipe_a = Recipe.objects.get(pk=1)
+        recipe_b = Recipe.objects.get(pk=2)
+
+        RecipeComment.objects.create(author=user_a, recipe=recipe_a, body="recipe comment A")
+        RecipeComment.objects.create(author=user_a, recipe=recipe_b, body="recipe comment B")
+
+    def test_view_all_recipe_comments(self):
+        pass
+
+    def test_can_create_recipe_comment_if_logged_in(self):
+        pass
+
+    def test_cannot_create_recipe_comment_if_anonymous(self):
+        pass
+
+    def test_user_can_update_their_own_recipe_comment(self):
+        pass
+
+    def test_user_cannot_update_recipe_comment_if_not_owner(self):
+        pass
+
+    def test_user_can_delete_their_own_recipe_comment(self):
+        pass
+
+    def test_user_cannot_delete_recipe_comment_if_not_owner(self):
+        pass
+
+```
