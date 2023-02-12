@@ -298,3 +298,9 @@ class TestRecipeRatings(APITestCase):
         self.client.login(username='user_a', password='pass')
         response = self.client.delete('/recipes/ratings/2/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_average_rating_calculation(self):
+        response = self.client.get('/recipes/1/')
+        average = response.data['average_rating']
+        expected_average = 3.5
+        self.assertEqual(average, expected_average)

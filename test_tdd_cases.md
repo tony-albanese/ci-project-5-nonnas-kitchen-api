@@ -411,4 +411,7 @@ class TestRecipeRatings(APITestCase):
     def test_user_cannot_delete_others_rating(self):
         pass
 
+    def test_average_rating_calculation(self):
+        pass
+
 ```
