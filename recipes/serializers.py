@@ -1,7 +1,7 @@
 from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from django.db import IntegrityError
 from rest_framework import serializers
-from .models import Recipe, RecipeLike
+from .models import Recipe, RecipeLike, RecipeRating
 
 
 class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -71,3 +71,12 @@ class RecipeLikeSerializer(serializers.ModelSerializer):
                 'detail': 'possible duplicate like'
             })
 
+
+class RecipeRatingSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    
+    class Meta:
+        model = RecipeRating
+        fields = [
+            'id', 'owner', 'recipe', 'rating'
+        ]
