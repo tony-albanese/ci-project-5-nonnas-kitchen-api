@@ -80,3 +80,20 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'owner', 'recipe', 'rating'
         ]
+
+    def validate_rating(self, value):
+        if value < 0 or value > 5:
+            raise serializers.ValidationError(
+                'Rating value is out of range.'
+            )
+        else:
+            return value
+
+    def create(self, validated_data):
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError({
+                'detail': 'possible duplicate like'
+            })
+
