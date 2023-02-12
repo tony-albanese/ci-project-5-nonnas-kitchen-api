@@ -151,6 +151,21 @@ The **RecipeComment** model encapsulates the information required for a User to 
 |type|field name|
 |ForeignKey(Recipe)|recipe|
 
+The **AbstractRating** model encapsulates the information common to all ratings. The user field is OneToMany because a User can have multiple ratings but each Rating can belong to only one User.
+
+|AbtrsactRating ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|owner|
+|IntegerField|rating|
+
+The **RecipeRating** model encapsulates the information required for a User to rate a Recipe. It extends the AbstractRating model. The recipe field is OneToMany because a Recipe can have many RecipeRatings but each RecipeRating can belong to only one Recipe. There is a uniqe_togethe field between recipe and owner to prevent a user from leaving multiple ratings on a Recipe.
+
+|RecipeRating ||
+|-----|----|
+|type|field name|
+|ForeignKey(Recipe)|recipe|
+
 # Features
 ## Profiles Endpoint
 ```
