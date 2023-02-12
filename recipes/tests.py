@@ -193,7 +193,37 @@ class TestRecipeLikes(APITestCase):
 
 class TestRecipeRatings(APITestCase):
     def setUp(self):
-        pass
+        # Create two users.
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        # Create two Recipe objects.
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+        
+        recipe_a = Recipe.objects.get(pk=1)
+        recipe_b = Recipe.objects.get(pk=2)
+
+        # user_a rates recipe_a
+        RecipeRating.objects.create(owner=user_a, rating=3, recipe=recipe_a)
+        # user_b rates recipe_a and recipe_b
+        RecipeRating.objects.create(owner=user_b, rating=4, recipe=recipe_a)
+        RecipeRating.objects.create(owner=user_b, rating=4, recipe=recipe_b)
 
     def test_user_get_list_of_recipe_ratings(self):
         pass
