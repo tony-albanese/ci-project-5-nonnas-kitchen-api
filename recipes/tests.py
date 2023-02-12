@@ -224,6 +224,15 @@ class TestRecipeRatings(APITestCase):
             procedure='{}',
             tags=""
         )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 3',
+            description='description 3',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
         
         recipe_a = Recipe.objects.get(pk=1)
         recipe_b = Recipe.objects.get(pk=2)
@@ -241,7 +250,15 @@ class TestRecipeRatings(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_logged_in_user_can_leave_a_rating(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.post('/recipes/ratings/', {'owner': current_user, 'recipe': 3, 'rating': 2})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_anonymous_user_cannot_leave_a_rating(self):
+        current_user = User.objects.get(username='user_b')
+        response = self.client.post('/recipes/ratings/', {'owner': current_user, 'recipe': 3, 'rating': 2})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_rating_value_cannot_be_zero(self):
         pass
