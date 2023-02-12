@@ -270,13 +270,31 @@ class TestRecipeRatings(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_user_cannot_rate_same_recipe_twice(self):
-        pass
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.post('/recipes/ratings/', {'owner': current_user, 'recipe': 1, 'rating': 5})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
     def test_user_can_update_rating_value(self):
-        pass
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.put('/recipes/ratings/1/', {'recipe': 1, 'rating': 5})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+    def test_user_cannot_update_others_rating(self):
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.put('/recipes/ratings/1/', {'recipe': 1, 'rating': 5})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_user_can_delete_own_rating(self):
-        pass
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/recipes/ratings/1/')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_user_cannot_delete_others_rating(self):
-        pass
+        current_user = User.objects.get(username='user_a')
+        self.client.login(username='user_a', password='pass')
+        response = self.client.delete('/recipes/ratings/2/')
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
