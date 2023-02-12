@@ -38,6 +38,12 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want to filter Profiles by follower so that I do not have to manually query the database.
 + As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality for a BlogPost so that I do not have to manually query the database.
 
+### Recipes
++ As a developer using Nonna's Kitchen backend to build applications, I want and endpoin to perform CRUD operations on a RECIPE so that I do not have query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -46,6 +52,22 @@ settings.py was modified with the following setting so that django authorizaton 
 ```
 AUTH_USER_MODEL = 'kitchen_user.User'
 ```
+
+The **AbstractLike** model encapsualtes the information common to all likes. This model is marked as abstract so that a table will not be created for it. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes.  Other types of Like models can inherit from this model and add the fields needed. 
+
+|AbstractLike ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|owner|
+|DateTimeField|created_on|
+
+The **AbstractComment** model encapsulates the information common to all comments. This model is marked as abstract so that a table will not be created for it. The author field is a one-to-many realationhip with a User since each Comment can only have one author.
+|AbstractComment ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|author|
+|DateTimeField|created_on|
+|TextField|body|
 
 The **Profile** model encapsulates the extra data to enhance the standard information in the User model. The Profile contains additional fields for a biography, an avatar, and a cooking speciality.
 |Profile ||
@@ -72,22 +94,18 @@ The **BlogPost** model encapsulates the information a user wants to share on the
 |UrlField|link|
 |CharField|category|
 
-The **Comment** model encapsulates the information required for a User to leave a comment on a BlogPost. The author field is a one-to-many realationhip with a User since each Comment can only have one author. There is a also a one-to-money relationship with the BlogPost because each Comment can only belong to one BlogPost but a BlogPost can have many Comments.
+The **Comment** model encapsulates the information required for a User to leave a comment on a BlogPost. It extends the AbstractComment model.  There is a also a one-to-money relationship with the BlogPost because each Comment can only belong to one BlogPost but a BlogPost can have many Comments.
 |Comment ||
 |-----|----|
 |type|field name|
-|ForeignKey(User)|author|
 |ForeignKey(BlogPost)|blog_post|
-|DateTimeField|created_on|
-|TextField|body|
 
-The **Like** model encapsulates the information required for a User to like a BlogPost. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes. The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
+
+The **Like** model encapsulates the information required for a User to like a BlogPost. It inherits from AbstractBlogPost  The blog_post field is also one-to-many since each Like can only belong to one BlogPost but each BlogPost can have many likes.
 |Like ||
 |-----|----|
 |type|field name|
-|ForeignKey(User)|owner|
 |ForeignKey(BlogPost)|blog_post|
-|DateTimeField|created_on|
 
 
 The **Follower** model encapsulates the information required for a User to follow another User. The following field is the User that is following a User. The follower field is the User that is followed by the user in the following field.
@@ -97,6 +115,39 @@ The **Follower** model encapsulates the information required for a User to follo
 |ForeignKey(User)|following|
 |ForeignKey(User)|follower|
 |DateTimeField|followed_on|
+
+
+The **Recipe** model encapsulates the information required for a Recipe object in the database.
+|Like ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|author|
+|CharField|title|
+|TextField|description|
+|CharField(ChoiceField)|dish_type|
+|CharField(ChoiceField)|difficulty|
+|IntegerField|time|
+|CharField(ChoiceField)|time_unit|
+|IntegerField|servings|
+|JSONField|ingredients|
+|JSONField|procedure|
+|TaggableManager|tags|
+|ImageField|recipe_image|
+|DataTimeField|posted_on|
+
+
+The **RecipeLike** model encapsulates the information required for a User to like a Recipe. The model inherits from the AbstractLike model. The recipe field will link this model to a Recipe model.
+
+|RecipeLike ||
+|-----|----|
+|type|field name|
+|ForeignKey(Recipe)|recipe|
+
+The **RecipeComment** model encapsulates the information required for a User to leave a comment on a Recipe. It extends the AbstractComment model.  There is a also a one-to-money relationship with the Recipe because each RecipeComment can only belong to one Recipe but a Recipe can have many RecipeComments.
+|Comment ||
+|-----|----|
+|type|field name|
+|ForeignKey(Recipe)|recipe|
 
 # Features
 ## Profiles Endpoint
@@ -207,6 +258,48 @@ Searching and filtering has been added for the BlogPost, Comment, and Profile mo
 > + As a developer using Nonna's Kitchen backend to build applications, I want to get all the comments that belong to a blogpost so that I can display them to the user without having to query the database.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to filter Profiles by follower so that I do not have to manually query the database.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality for a BlogPost so that I do not have to manually query the database.
+
+
+## Recipe endpoint
+```
+POST recipes/
+GET recipes/
+GET recipes/<int:id>/
+PUT recipes/<int:id>/
+DELETE recipes/<int:id>/
+```
+This enpoint allows a User to enter a Recipe if they're logged in or to get a list of all the recipes if they are not. A User can update or delete a recipe if they are the owner. A user can also like a recipe if they are logged in and see how many likes a recipe can have. Recipes can be searched by title and type and filtered by type, author, difficulty, and author profile.  A user can remove their own like from a Recipe. This functionality is tested in the [TDD test cases](test_tdd_cases.md) file.
+
++ Recipes List
+![recipes list](repo_images/recipes_list.png)
++ Add a recipe if User logged in
+![add recipe login](repo_images/add_recipe_login.png)
++ Search and filter Recipes
+![search and filter recipes](repo_images/recipe_search_filter.png)
++ See list of Likes for Recipe
+![recipe like list](repo_images/recipe_likes_list.png)
++ Like a Recipe if logged in.
+![like recipe if logged in](repo_images/recipe_liked_logged_in.png)
+
+> + As a developer using Nonna's Kitchen backend to build applications, I want and endpoin to perform CRUD operations on a RECIPE so that I do not have query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
+
++ Commenting on a recipe
+```
+POST recipes/comments/
+GET recipes/comments/
+GET recipes/comments/<int:id>/
+PUT recipes/comments<int:id>/
+DELETE recipes/comments<int:id>/
+```
+This endpoint allows users to leave a comment on a recipe if they are logged in. A user can get a list of all the recipe comments. Permissions are implemented so that a user can only update and delete their own comments.
+![recipe comment](repo_images/recipe_comment.png) 
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
+
+# Agile Workflow
+
 
 # Testing
 ## Behavior Driven Development (BDD)

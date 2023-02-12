@@ -158,3 +158,176 @@ class TestFollowerDetailView(APITestCase):
     def test_cant_unfollow_if_not_logged_in(self):
         pass
 ```
+
+
+## recipes endpoint test cases
+```
+class RecipeViewTests(APITestCase):
+    def setUp(self):
+        User.objects.create_user(username='test_user', password='password')
+    
+    def test_user_can_get_list_of_recipes(self):
+        pass
+
+    def test_logged_in_user_can_create_recipe(self):
+        pass
+
+    def test_anonymous_user_cant_create_recipe(self):
+        pass
+```
+
+
+```
+class RecipeDetailViewTests(APITestCase):
+    def setUp(self):
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+    def test_can_retrieve_recipe_with_valid_id(self):
+        pass
+
+    def test_cannot_retrieve_recipe_with_invalid_id(self):
+        pass
+
+    def test_user_can_update_own_recipe(self):
+        pass
+
+    def test_user_cant_update_another_users_recipe(self):
+        pass
+
+    def test_user_can_delete_their_own_recipe(self):
+        pass
+
+    def test_user_cannot_delete_recipe_not_their_own(self):
+        pass
+```
+
+## recipes/likes endpoint test cases
+
+```
+class TestRecipeLikes(APITestCase):
+
+    def setUp(self):
+        # Create two users.
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        # Create two Recipe objects.
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        # Get references to the newly created recipes
+        recipe_a = Recipe.objects.get(id=1)
+        recipe_b = Recipe.objects.get(id=2)
+
+        # Create two RecipeLikes. user_a will like both recipes.
+        RecipeLike.objects.create(owner=user_a, recipe=recipe_a)
+        RecipeLike.objects.create(owner=user_a, recipe=recipe_b)
+
+    def test_user_can_get_recipe_likes(self):
+        pass
+
+    def test_logged_in_user_can_like_a_recipe(self):
+        pass
+
+    def test_unauthenticated_user_cant_like_recipe(self):
+        pass
+
+    def test_user_can_delete_own__recipe_like(self):
+        pass
+
+    def test_user_cannot_delete_other_recipe_likes(self):
+        pass
+
+    def test_cant_have_duplicate_recipe_likes(self):
+        pass
+```
+
+## Recipe Comment tests
+```
+class RecipeCommentViewTests(APITestCase):
+    def setUp(self):
+        User.objects.create_user(username='test_user', password='password')
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        # Create some recipes
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+        # Create some commments.
+        recipe_a = Recipe.objects.get(pk=1)
+        recipe_b = Recipe.objects.get(pk=2)
+
+        RecipeComment.objects.create(author=user_a, recipe=recipe_a, body="recipe comment A")
+        RecipeComment.objects.create(author=user_a, recipe=recipe_b, body="recipe comment B")
+
+    def test_view_all_recipe_comments(self):
+        pass
+
+    def test_can_create_recipe_comment_if_logged_in(self):
+        pass
+
+    def test_cannot_create_recipe_comment_if_anonymous(self):
+        pass
+
+    def test_user_can_update_their_own_recipe_comment(self):
+        pass
+
+    def test_user_cannot_update_recipe_comment_if_not_owner(self):
+        pass
+
+    def test_user_can_delete_their_own_recipe_comment(self):
+        pass
+
+    def test_user_cannot_delete_recipe_comment_if_not_owner(self):
+        pass
+
+```

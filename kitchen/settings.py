@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'followers',
     'posts',
     'comments',
+    'recipes',
     'taggit'
 ]
 
