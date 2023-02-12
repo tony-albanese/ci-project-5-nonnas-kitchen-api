@@ -76,7 +76,7 @@ class CommentViewTests(APITestCase):
 
 
 class RecipeCommentViewTests(APITestCase):
-    def settings(self):
+    def setUp(self):
         User.objects.create_user(username='test_user', password='password')
         user_a = User.objects.create_user(username='user_a', password='pass')
         user_b = User.objects.create_user(username='user_b', password='pass')
@@ -99,6 +99,7 @@ class RecipeCommentViewTests(APITestCase):
             procedure='{}',
             tags=""
         )
+
         # Create some commments.
         recipe_a = Recipe.objects.get(pk=1)
         recipe_b = Recipe.objects.get(pk=2)
@@ -106,23 +107,32 @@ class RecipeCommentViewTests(APITestCase):
         RecipeComment.objects.create(author=user_a, recipe=recipe_a, body="recipe comment A")
         RecipeComment.objects.create(author=user_a, recipe=recipe_b, body="recipe comment B")
 
-    def test_view_all_comments(self):
+    def test_view_all_recipe_comments(self):
+        response = self.client.get('/recipes/comments/')
+        count = RecipeComment.objects.count()
+
+        self.assertEqual(count, 2)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+    def test_can_create_recipe_comment_if_logged_in(self):
+        self.client.login(username='user_a', password='pass')
+        current_user = User.objects.get(username='user_a')
+        response = self.client.post('/recipes/comments/', {'author': current_user, 'recipe': 2, 'body': 'Test comment body'})
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_cannot_create_recipe_comment_if_anonymous(self):
+        current_user = User.objects.get(username='user_a')
+        response = self.client.post('/recipes/comments/', {'author': current_user, 'recipe': 2, 'body': 'Test comment body'})
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_user_can_update_their_own_recipe_comment(self):
         pass
 
-    def test_can_create_comment_if_logged_in(self):
+    def test_user_cannot_update_recipe_comment_if_not_owner(self):
         pass
 
-    def test_cannot_create_comment_if_anonymous(self):
+    def test_user_can_delete_their_own_recipe_comment(self):
         pass
 
-    def test_user_can_update_their_own_comment(self):
-        pass
-
-    def test_user_cannot_update_comment_if_not_owner(self):
-        pass
-
-    def test_user_can_delete_their_own_comment(self):
-        pass
-
-    def test_user_cannot_delete_comment_if_not_owner(self):
+    def test_user_cannot_delete_recipe_comment_if_not_owner(self):
         pass
