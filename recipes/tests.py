@@ -252,13 +252,22 @@ class TestRecipeRatings(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_rating_value_cannot_be_zero(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.post('/recipes/ratings/', {'owner': current_user, 'recipe': 3, 'rating': 0})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_rating_value_cannot_be_negative(self):
-        pass
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.post('/recipes/ratings/', {'owner': current_user, 'recipe': -3, 'rating': 0})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
     
-    def test_rating_value_cannot_be_larger_than_five(sefl):
-        pass
+    def test_rating_value_cannot_be_larger_than_five(self):
+        current_user = User.objects.get(username='user_b')
+        self.client.login(username='user_b', password='pass')
+        response = self.client.post('/recipes/ratings/', {'owner': current_user, 'recipe': 6, 'rating': 0})
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_user_cannot_rate_same_recipe_twice(self):
         pass
