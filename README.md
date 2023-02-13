@@ -416,6 +416,7 @@ After development and testing, the backend was ready to deploy to Heroku. The pr
 
 For improved readability, the steps followed are broken down into the following separate documents:
 + [Preparation for Final Deployment](deployment_prep.md)
++ [Deployment to Heroku](deployment_heroku.md)
 
 # Credits
 Default avatar: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by logisstudio - Flaticon</a>
