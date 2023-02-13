@@ -1,6 +1,10 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 # Nonna's Kitchen Backend
+Food has the power to invoke strong emotions - especially food that is connected with our ancestors, family, and culture. Nonna's Kitchen API (Nonna is Italian for grandmother) provides the backend for the creation, storage, retrieval, search, and filtering of content that centers around the food of our anscestors and culture. The two main content types are a BlogPost and a Recipe. A BlogPost allows a user to write a short paragraph describing the emotional connection they have with a dish and upload a picture if they choose. A Recipe is just that - a way for users to share the recipes of their cultture with the community. 
+
+This API provides the necessary resources to manage users, create, rate, and comment upon content as well as to search and filter content depending on what features a front-end developer wishes to implement.
+
 
 ## Developer User Stories
 ### Profiles
