@@ -80,3 +80,101 @@ if 'DEV' in os.environ:
 ```
  $ python manage.py createsuperuser
 ```
+
+#### Continuing with GitPod workspace setup
+> install gunicorn and update requirements.txt
+```
+$ pip install gunicorn django-cors-headers
+$ pip freeze --local > requirements.txt
+```
+
+> Create Procfile and add the following lines:
+```
+release: python manage.py makemigrations && python manage.py migrate
+web: gunicorn kitchen.wsgi
+```
+
+> Add allowed hosts to settings.py
+```
+ALLOWED_HOSTS = ['localhost', '<your_app_name>.herokuapp.com']
+```
+
+> Add corsheaders to INSTALLED_APPS
+```
+INSTALLED_APPS = [
+    ...
+    'dj_rest_auth.registration',
+    'corsheaders',
+    ...
+ ]
+ ```
+
+ > Add corsheaders middleware to the TOP of the MIDDLEWARE
+
+```
+ MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',
+     ...
+ ]
+ ```
+
+ > Under the MIDDLEWARE list, set the ALLOWED_ORIGINS for the network requests made to the server with the following code:
+ ```
+  if 'CLIENT_ORIGIN' in os.environ:
+     CORS_ALLOWED_ORIGINS = [
+         os.environ.get('CLIENT_ORIGIN')
+     ]
+ else:
+     CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https://.*\.gitpod\.io$",
+     ]
+```
+
+> Enable sending cookies in cross-origin requests so that users can get authentication functionality
+```
+ else:
+     CORS_ALLOWED_ORIGIN_REGEXES = [
+         r"^https://.*\.gitpod\.io$",
+     ]
+
+ CORS_ALLOW_CREDENTIALS = True
+ ```
+
+> To be able to have the front end app and the API deployed to different platforms, set the JWT_AUTH_SAMESITE attribute to 'None'. Without this the cookies would be blocked
+ ```
+  JWT_AUTH_SAMESITE = 'None'
+ ```
+
+
+> To be able to have the front end app and the API deployed to different platforms, set the JWT_AUTH_SAMESITE attribute to 'None'. Without this the cookies would be blocked
+```
+ # SECURITY WARNING: keep the secret key used in production secret!
+ SECRET_KEY = os.getenv('SECRET_KEY')
+```
+
+
+> Set a NEW value for your SECRET_KEY environment variable in env.py, do NOT use the same one that has been published to GitHub in your commits
+```
+ os.environ.setdefault("SECRET_KEY", "CreateANEWRandomValueHere")
+```
+
+> Set the DEBUG value to be True only if the DEV environment variable exists. This will mean it is True in development, and False in production
+```
+DEBUG = 'DEV' in os.environ
+```
+
+> Comment DEV back in env.py
+
+```
+ import os
+
+ os.environ['CLOUDINARY_URL'] = "cloudinary://..."
+ os.environ['SECRET_KEY'] = "Z7o..."
+ os.environ['DEV'] = '1'
+ os.environ['DATABASE_URL'] = "postgres://..."
+```
+
+Ensure the project requirements.txt file is up to date. In the Gitpod terminal of your DRF API project enter the following
+```
+$ pip freeze --local > requirements.txt
+```
