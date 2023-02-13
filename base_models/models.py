@@ -28,7 +28,8 @@ class AbstractLike(models.Model):
 class AbstractRating(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
+    created_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         abstract = True
-        
+        ordering = ['-created_on']
