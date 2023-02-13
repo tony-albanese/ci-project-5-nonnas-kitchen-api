@@ -65,7 +65,7 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     'localhost', 
-    os.environ.get('ALLOWED_HOST')
+    'nonnas-kitchen-api.herokuapp.com/'
     ]
 
 
