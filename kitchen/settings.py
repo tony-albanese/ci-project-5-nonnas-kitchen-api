@@ -65,7 +65,7 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     'localhost', 
-    'nonnas-kitchen-api.herokuapp.com/'
+    'nonnas-kitchen-api.herokuapp.com'
     ]
 
 
