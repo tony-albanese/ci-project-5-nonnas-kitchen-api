@@ -129,3 +129,50 @@ $ python manage.py migrate
 ```
 $ pip freeze > requirements.txt
 ```
+
+#### Adding the root route
+This will display a welcome message if a user navigates to the home page of the api.
+> create views.py in the main kitchen app and add the following code:
+```
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
+@api_view()
+def root_route(request):
+    return Response({
+        "message": "Nonna's Kitchen API"
+    })
+
+```
+
+> Update urls.py in main kitchen app to link the root to the view.
+```
+urlpatterns = [
+    …,
+    path('', root_route)
+]
+
+```
+
+#### Add Pagination, JSON renderer, and default DateTime format
+
+> Update the REST_FRAMEWORK variable in settings.py for pagination and formatting the DateTime
+
+```
+REST_FRAMEWORK = {
+    ...,
+    'DEFAULT_PAGINATION_CLASS':  'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    'DATETIME_FORMAT': '%d %b %Y'
+    }
+
+```
+
+> Add the following to settings.py to set the JSON renderer
+```
+if 'DEV' not in os.environ:
+    REST_FRAMEWORK['DEFAULT_RENDERER_CLASSES'] = [
+        'rest_framework.renderers.JSONRenderer',
+    ]
+```
