@@ -59,7 +59,7 @@ class Recipe(models.Model):
 
 
 class RecipeLike(AbstractLike):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_likes', null=True)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_likes')
 
     class Meta:
         unique_together = ['owner', 'recipe']
@@ -70,11 +70,11 @@ class RecipeLike(AbstractLike):
 
 
 class RecipeRating(AbstractRating):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_ratings', null=True)
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_ratings')
 
     class Meta:
         unique_together = ['owner', 'recipe']
-        ordering = ['id']
+        ordering = ['created_on']
 
     def __str__(self):
         return f"{self.recipe.title} Rating: {self.rating}"
