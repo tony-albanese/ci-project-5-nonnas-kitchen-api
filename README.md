@@ -44,6 +44,8 @@
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
++ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaulate content without having to query the database myself.
+
 # Database Design
 ## Models
 The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
@@ -145,6 +147,21 @@ The **RecipeLike** model encapsulates the information required for a User to lik
 
 The **RecipeComment** model encapsulates the information required for a User to leave a comment on a Recipe. It extends the AbstractComment model.  There is a also a one-to-money relationship with the Recipe because each RecipeComment can only belong to one Recipe but a Recipe can have many RecipeComments.
 |Comment ||
+|-----|----|
+|type|field name|
+|ForeignKey(Recipe)|recipe|
+
+The **AbstractRating** model encapsulates the information common to all ratings. The user field is OneToMany because a User can have multiple ratings but each Rating can belong to only one User.
+
+|AbtrsactRating ||
+|-----|----|
+|type|field name|
+|ForeignKey(User)|owner|
+|IntegerField|rating|
+
+The **RecipeRating** model encapsulates the information required for a User to rate a Recipe. It extends the AbstractRating model. The recipe field is OneToMany because a Recipe can have many RecipeRatings but each RecipeRating can belong to only one Recipe. There is a uniqe_togethe field between recipe and owner to prevent a user from leaving multiple ratings on a Recipe.
+
+|RecipeRating ||
 |-----|----|
 |type|field name|
 |ForeignKey(Recipe)|recipe|
@@ -297,6 +314,22 @@ DELETE recipes/comments<int:id>/
 This endpoint allows users to leave a comment on a recipe if they are logged in. A user can get a list of all the recipe comments. Permissions are implemented so that a user can only update and delete their own comments.
 ![recipe comment](repo_images/recipe_comment.png) 
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
+
+## Recipe Rating Endpoint
+```
+POST recipes/ratings/
+GET recipes/ratings/
+GET recipes/ratings/<int:id>/
+PUT recipes/ratings<int:id>/
+DELETE recipes/ratings<int:id>/
+```
+This endpoint allows a User to rate a Recipe. A valid rating must be an integer between 1 and 5. A User can get a list of ratings and create a new rating if they are logged in. They can update a rating if they are the owner. A user is prevented from updating or deleting a Rating they do not own. They cannot leave multiple ratings for a Recipe, but they can update the value of a current rating.
+![ratings list](repo_images/recipe_rating.png)  
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaulate content without having to query the database myself.  
+A field for the average rating has also been added to the RecipeList view to display the average rating associated for a recipe.
+![average rating](repo_images/average_rating.png)
+
+
 
 # Agile Workflow
 

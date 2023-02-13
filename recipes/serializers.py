@@ -1,7 +1,7 @@
 from taggit.serializers import (TagListSerializerField, TaggitSerializer)
 from django.db import IntegrityError
 from rest_framework import serializers
-from .models import Recipe, RecipeLike
+from .models import Recipe, RecipeLike, RecipeRating
 
 
 class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
@@ -16,6 +16,8 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     likes_count = serializers.ReadOnlyField()
     like_id = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
+    ratings_count = serializers.ReadOnlyField()
+    average_rating = serializers.SerializerMethodField()
     
     def validate_recipe_image(self, value):
         if value.size > 1024*1024*2:
@@ -34,6 +36,9 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     def get_dish_type_name(self, obj):
         return obj.get_dish_type_display()
+    
+    def get_average_rating(self, obj):
+        return obj.average_rating()
 
     def get_like_id(self, obj):
         user = self.context['request'].user
@@ -50,7 +55,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
             'id', 'author', 'is_author', 'posted_on', 'title', 'description', 'dish_type',
             'dish_type_name', 'difficulty', 'time', 'time_unit', 'servings',
             'ingredients_list', 'procedure', 'tags', 'recipe_image', 
-            'profile_id', 'profile_image', 'likes_count', 'like_id', 'comments_count'
+            'profile_id', 'profile_image', 'likes_count', 'like_id', 'comments_count', 'ratings_count', 'average_rating'
         ]
 
 
@@ -70,3 +75,35 @@ class RecipeLikeSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'detail': 'possible duplicate like'
             })
+
+
+class RecipeRatingSerializer(serializers.ModelSerializer):
+    owner = serializers.ReadOnlyField(source='owner.username')
+    is_owner = serializers.SerializerMethodField()
+    
+    class Meta:
+        model = RecipeRating
+        fields = [
+            'id', 'owner', 'is_owner', 'recipe', 'rating'
+        ]
+
+    def get_is_owner(self, obj):
+        request = self.context['request']
+        return request.user == obj.owner
+
+    def validate_rating(self, value):
+        if value <= 0 or value > 5:
+            raise serializers.ValidationError(
+                'Rating value is out of range.'
+            )
+        else:
+            return value
+
+    def create(self, validated_data):
+        try:
+            return super().create(validated_data)
+        except IntegrityError:
+            raise serializers.ValidationError({
+                'detail': 'possible duplicate like'
+            })
+

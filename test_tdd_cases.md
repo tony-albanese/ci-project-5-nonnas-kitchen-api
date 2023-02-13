@@ -331,3 +331,87 @@ class RecipeCommentViewTests(APITestCase):
         pass
 
 ```
+
+## Recipe rating tests
+
+```
+class TestRecipeRatings(APITestCase):
+        def setUp(self):
+        # Create two users.
+        user_a = User.objects.create_user(username='user_a', password='pass')
+        user_b = User.objects.create_user(username='user_b', password='pass')
+
+        # Create three Recipe objects.
+        Recipe.objects.create(
+            author=user_a,
+            title='title 1',
+            description='description 1',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 2',
+            description='description 2',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+
+        Recipe.objects.create(
+            author=user_a,
+            title='title 3',
+            description='description 3',
+            ingredients_list='{}',
+            procedure='{}',
+            tags=""
+        )
+        
+        recipe_a = Recipe.objects.get(pk=1)
+        recipe_b = Recipe.objects.get(pk=2)
+
+        # user_a rates recipe_a
+        RecipeRating.objects.create(owner=user_a, rating=3, recipe=recipe_a)
+        # user_b rates recipe_a and recipe_b
+        RecipeRating.objects.create(owner=user_b, rating=4, recipe=recipe_a)
+        RecipeRating.objects.create(owner=user_b, rating=4, recipe=recipe_b)
+
+    def test_user_get_list_of_recipe_ratings(self):
+        pass
+
+    def test_logged_in_user_can_leave_a_rating(self):
+        pass
+
+    def test_anonymous_user_cannot_leave_a_rating(self):
+        pass
+        
+    def test_rating_value_cannot_be_zero(self):
+        pass
+
+    def test_rating_value_cannot_be_negative(self):
+        pass
+    
+    def test_rating_value_cannot_be_larger_than_five(sefl):
+        pass
+
+    def test_user_cannot_rate_same_recipe_twice(self):
+        pass
+    
+    def test_user_can_update_rating_value(self):
+        pass
+
+    def test_user_cannot_update_others_rating(self):
+        pass
+
+    def test_user_can_delete_own_rating(self):
+        pass
+
+    def test_user_cannot_delete_others_rating(self):
+        pass
+
+    def test_average_rating_calculation(self):
+        pass
+
+```

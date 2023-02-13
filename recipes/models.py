@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Avg
 from kitchen_user.models import User
 from base_models.models import AbstractLike, AbstractRating
 from taggit.managers import TaggableManager
@@ -53,6 +54,9 @@ class Recipe(models.Model):
     def __str__(self):
         return self.title
 
+    def average_rating(self):
+        return RecipeRating.objects.filter(recipe=self).aggregate(Avg("rating"))["rating__avg"]
+
 
 class RecipeLike(AbstractLike):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_likes', null=True)
@@ -65,9 +69,10 @@ class RecipeLike(AbstractLike):
 
 
 class RecipeRating(AbstractRating):
-    recipe = models.ForeignKey(
-        Recipe, on_delete=models.CASCADE, null=True
-     )
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='recipe_ratings', null=True)
+
+    class Meta:
+        unique_together = ['owner', 'recipe']
 
     def __str__(self):
-        return f"{self.recipe.title}: Rating {self.rating}"
+        return f"{self.recipe.title} Rating: {self.rating}"
