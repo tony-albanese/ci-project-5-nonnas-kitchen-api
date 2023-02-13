@@ -34,6 +34,7 @@ class Like(AbstractLike):
 
     class Meta:
         unique_together = ['owner', 'blog_post']
+        ordering = ['created_on']
 
     def __str__(self):
         return f"Owner: {self.owner} Blog Post: {self.blog_post.title}"
