@@ -14,3 +14,10 @@ The first step is to create a new instance of a PostgreSQL database on ElephantS
 
 
 #### Create App in Heroku
++ Navigate to ![Heroku]()
++ Login or create an account
++ Click on **Create new app**
++ Give the app a name
++ Click on **Create app**
++ Open Settings Tab
++ Add Config Var for DATABASE_URL and paste the url pointing to the newly created Postgres database from ElephantSQL
