@@ -178,3 +178,34 @@ Ensure the project requirements.txt file is up to date. In the Gitpod terminal o
 ```
 $ pip freeze --local > requirements.txt
 ```
+
+#### Heroku Deployment
++ Add SECRET_KEY amd CLOUDINARY_URL to config vars. The SECRET_KEY value is a made up string. The CLOUDINARY_URL is copied from settings.py.
+
++ The dj-rest-auth logout bug was fixed by copying the solution from Code Institute's walkthrough project. A custom logout view was created which will send an expired token to force logout. The code was taken from [this repo](https://github.com/Code-Institute-Solutions/drf-api/blob/master/drf_api/views.py#L16) and the urls updated from this [urls](https://github.com/Code-Institute-Solutions/drf-api/blob/5210e34d25111e1556d10e895206e255d990e4bb/drf_api/urls.py#L25) file.
+
++ ALLOWED_HOSTS was modified to make the heroku host an environmental variable to prevent multiple instances.
+```
+ALLOWED_HOSTS = [
+   os.environ.get('ALLOWED_HOST'),
+   'localhost',
+]
+```
+The value for the heroku app name was added as an addtional config var named ALLOWED_HOST in Heroku. The value is the name of the app.
+
++ CLIENT_ORIGIN_DEV was added to make development of the front end with GitPod possible. The following block replacced the else statement in the if "CLIENT_ORIGIN..." statement
+
+```
+if 'CLIENT_ORIGIN_DEV' in os.environ:
+    extracted_url = re.match(r'^.+-', os.environ.get('CLIENT_ORIGIN_DEV', ''), re.IGNORECASE).group(0)
+    CORS_ALLOWED_ORIGIN_REGEXES = [
+        rf"{extracted_url}(eu|us)\d+\w\.gitpod\.io$",
+    ]
+```
++ Changes were commited and pushed to GitHub
++ In Heroku, the Deploy tab was selected.\
++ Connect to GitHub was chosen
++ The project repo was selected
++ Click on **Connect**
++ Deploy Branch from the Manual Deploy section was used
++ The main branch was selected and **Deploy** was clicked
