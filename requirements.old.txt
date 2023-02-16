@@ -1,3 +1,4 @@
+# This is the original with libraries newer than the walkthrough.
 asgiref==3.6.0
 cloudinary==1.31.0
 dj-database-url==0.5.0
