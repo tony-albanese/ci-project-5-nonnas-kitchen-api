@@ -11,6 +11,7 @@ class BlogPostSerializer(serializers.ModelSerializer):
     profile_image = serializers.ReadOnlyField(source='author.profile.avatar.url')
     is_liked = serializers.SerializerMethodField()
     likes_count = serializers.ReadOnlyField()
+    like_id = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
 
     def validate_post_image(self, value):
@@ -35,12 +36,21 @@ class BlogPostSerializer(serializers.ModelSerializer):
             return like.id if like else None
         return None
     
+    def get_like_id(self, obj):
+        user = self.context['request'].user
+        if user.is_authenticated:
+            like = Like.objects.filter(
+                owner=user, blog_post=obj
+            ).first()
+            return like.id if like else None
+        return None
+
     class Meta:
         model = BlogPost
         fields = [
             'id', 'author', 'title',  'body', 'category', 'posted_on',
             'post_image', 'is_author', 'profile_id', 'profile_image',
-            'is_liked', 'likes_count', 'comments_count'
+            'is_liked','like_id', 'likes_count', 'comments_count'
         ]
 
 
