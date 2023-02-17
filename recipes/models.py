@@ -63,7 +63,7 @@ class RecipeLike(AbstractLike):
 
     class Meta:
         unique_together = ['owner', 'recipe']
-        ordering = ['created_on']
+        ordering = ['-created_on']
 
     def __str__(self):
         return f"Owner: {self.owner} Liked recipe: {self.recipe.title}"
@@ -74,7 +74,7 @@ class RecipeRating(AbstractRating):
 
     class Meta:
         unique_together = ['owner', 'recipe']
-        ordering = ['created_on']
+        ordering = ['-created_on']
 
     def __str__(self):
         return f"{self.recipe.title} Rating: {self.rating}"
