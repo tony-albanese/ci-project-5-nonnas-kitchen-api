@@ -1,6 +1,10 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 # Nonna's Kitchen Backend
+Food has the power to invoke strong emotions - especially food that is connected with our ancestors, family, and culture. Nonna's Kitchen API (Nonna is Italian for grandmother) provides the backend for the creation, storage, retrieval, search, and filtering of content that centers around the food of our anscestors and culture. The two main content types are a BlogPost and a Recipe. A BlogPost allows a user to write a short paragraph describing the emotional connection they have with a dish and upload a picture if they choose. A Recipe is just that - a way for users to share the recipes of their cultture with the community. 
+
+This API provides the necessary resources to manage users, create, rate, and comment upon content as well as to search and filter content depending on what features a front-end developer wishes to implement.
+
 
 ## Developer User Stories
 ### Profiles
@@ -411,9 +415,17 @@ Git was employed in this project and the project code hosted on GitHub. I used b
         'profiles'
     ]
     ```
+## Deployment to Heroku
+After development and testing, the backend was ready to deploy to Heroku. The procedure followed is that from Code Institute's walkthrough project DRF. The final deployment involved two broad steps: preparation and deployment to Heroku.
+
+For improved readability, the steps followed are broken down into the following separate documents:
++ [Preparation for Final Deployment](deployment_prep.md)
++ [Deployment to Heroku](deployment_heroku.md)
 
 # Credits
 Default avatar: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by logisstudio - Flaticon</a>
 Default BlogPost image: <a href="https://www.freepik.com/free-vector/plate-cuttlery-graphic-illustration_2685788.htm#query=meal&position=1&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
 
 The code for implementing a ratings bar came from this Medium blog post: [Django: Implementing Star Rating](https://medium.com/geekculture/django-implementing-star-rating-e1deff03bb1c)
+
+The fix for the dj-rest-auth bug was taken from the [Code Institute's Repo](https://github.com/Code-Institute-Solutions/drf-api/blob/master/drf_api/views.py#L16) directly.
