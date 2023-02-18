@@ -45,7 +45,7 @@ class Recipe(models.Model):
     ingredients_list = models.JSONField()
     procedure = models.JSONField()
     tags = TaggableManager(blank=True)
-    recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
+    recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm', blank=True)
     posted_on = models.DateTimeField(auto_now=True)
 
     class Meta:

@@ -19,7 +19,7 @@ class BlogPost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_author')
     body = models.TextField()
     posted_on = models.DateTimeField(auto_now=True)
-    post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
+    post_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm', blank=True)
     category = models.CharField(max_length=5, choices=CATEGORIES, default='anec')
 
     class Meta:
