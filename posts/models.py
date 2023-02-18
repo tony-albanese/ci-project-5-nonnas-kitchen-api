@@ -6,14 +6,14 @@ from taggit.managers import TaggableManager
 
 
 class BlogPost(models.Model):
-    CATEGORIES = {
+    CATEGORIES = [
         ('anec', 'Anecdote'),
         ('tip', 'Tip'),
         ('hist', 'History'),
         ('fact', 'Fun Fact'),
         ('orig', 'Origin'),
         ('remin', 'Reminiscence')
-    }
+    ]
 
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='post_author')
