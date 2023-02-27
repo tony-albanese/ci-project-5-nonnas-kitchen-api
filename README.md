@@ -1,5 +1,39 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
+- [Nonna's Kitchen Backend](#nonna-s-kitchen-backend)
+  * [Developer User Stories](#developer-user-stories)
+    + [Profiles](#profiles)
+    + [Posts](#posts)
+    + [Comments](#comments)
+    + [Likes](#likes)
+    + [Followers](#followers)
+    + [Search and Filter](#search-and-filter)
+    + [Recipes](#recipes)
+- [Database Design](#database-design)
+  * [Models](#models)
+- [Features](#features)
+  * [Profiles Endpoint](#profiles-endpoint)
+  * [Posts endpoint](#posts-endpoint)
+  * [Comment Endpoint](#comment-endpoint)
+  * [Like endpoint](#like-endpoint)
+  * [Follower endpoint](#follower-endpoint)
+  * [Search and Filter](#search-and-filter-1)
+  * [Recipe endpoint](#recipe-endpoint)
+  * [Recipe Rating Endpoint](#recipe-rating-endpoint)
+- [Agile Workflow](#agile-workflow)
+- [Testing](#testing)
+  * [Behavior Driven Development (BDD)](#behavior-driven-development--bdd-)
+  * [Test Driven Development (TDD)](#test-driven-development--tdd-)
+- [Version Control Strategy](#version-control-strategy)
+- [Deployment](#deployment)
+  * [Technology Used](#technology-used)
+  * [Project Creation](#project-creation)
+  * [Deployment to Heroku](#deployment-to-heroku)
+- [Credits](#credits)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
+
 # Nonna's Kitchen Backend
 Food has the power to invoke strong emotions - especially food that is connected with our ancestors, family, and culture. Nonna's Kitchen API (Nonna is Italian for grandmother) provides the backend for the creation, storage, retrieval, search, and filtering of content that centers around the food of our anscestors and culture. The two main content types are a BlogPost and a Recipe. A BlogPost allows a user to write a short paragraph describing the emotional connection they have with a dish and upload a picture if they choose. A Recipe is just that - a way for users to share the recipes of their cultture with the community. 
 
