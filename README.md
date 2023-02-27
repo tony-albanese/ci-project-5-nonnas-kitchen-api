@@ -339,8 +339,31 @@ A field for the average rating has also been added to the RecipeList view to dis
 
 
 # Agile Workflow
+An Agile approach was used to manage the completion of this project. Specifically, this meant breaking the project down into smaller tasks with a focus on minimum functionality first. Only when a minimally viable product is ready will extra features be added. In addition, GitHub projects and Issues were used a tool to keep track of the tasks.
 
+What does minimally functioning mean in this context? As with any project, there are real constraints (time, energy, know-how) that force a developer to prioritize the work. Based on my abilities and constraints, I have prioritized the project requirements in the following way. Each entry is a sprint as is designed to encompass one to two full day's work.
 
+* User and Profile models and views
+* BlogPost with models, views, and serializers, full CRUD
+* Comment with models, views, and serializers, full CRUD
+* Like with models, views, and serializers, full CRUD
+* Unit testing
+* Recipe with models, views, and serializers, full CRUD
+* Like for a Recipe
+* Comment for a Recipe
+* Rating with models, views, and serializers, full CRUD
+* Unit test Recipe and Rating
+
+Each larger scale task was given a GitHub issue. This included the user stories, and anything else that would require attention. Issues were assigned labels to help prioritize them in the work flow. As can be seen, some issues are marked as "Must Do" while others are marked as "Should Do". Some issues are enhancements, others are questions requiring research. Often, if I ran into a problem that was not critical to fix or if I thought of a feature that I would like to add, I created an issue and assigned it a label to help me keep track of how important it is. The key is that essential features and critical issues were fixed first.
+
+![GitHub issues](repo_images/issues.png)
+
+Issues often are related to each other - this includes user stories and additional features. For example, user stories around CRUD operations belong together as well as issues involved with search and styling. To help keep issues organized, those that are related to each other were organized into projects.
+
+![GitHub Projects](repo_images/projects.png)
+
+In the "Recipes Endpoint" project, one can see all the issues that were completed during the course of the project.
+![project details](repo_images/project_details.png)
 # Testing
 ## Behavior Driven Development (BDD)
 The testing done here is BDD - each test is described as a story in which a description of the software requirements, the user actions, and the expected outcome are given along with a result of PASS or FAIL. To reduce the length of the readme, here is a link to the [testing tables](test_cases.md) describing the various test cases.
