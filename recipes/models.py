@@ -45,7 +45,7 @@ class Recipe(models.Model):
     ingredients_list = models.JSONField()
     procedure = models.JSONField()
     tags = TaggableManager(blank=True)
-    recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm')
+    recipe_image = models.ImageField(upload_to='images/', default='../blogpost_default_image_v2nwpm', blank=True)
     posted_on = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -63,7 +63,7 @@ class RecipeLike(AbstractLike):
 
     class Meta:
         unique_together = ['owner', 'recipe']
-        ordering = ['created_on']
+        ordering = ['-created_on']
 
     def __str__(self):
         return f"Owner: {self.owner} Liked recipe: {self.recipe.title}"
@@ -74,7 +74,7 @@ class RecipeRating(AbstractRating):
 
     class Meta:
         unique_together = ['owner', 'recipe']
-        ordering = ['created_on']
+        ordering = ['-created_on']
 
     def __str__(self):
         return f"{self.recipe.title} Rating: {self.rating}"
