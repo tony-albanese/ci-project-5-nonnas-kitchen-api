@@ -170,6 +170,9 @@ The **RecipeRating** model encapsulates the information required for a User to r
 |type|field name|
 |ForeignKey(Recipe)|recipe|
 
+The relationships between all of these models is summarized in the followed entity relationship diagram:
+![erd](repo_images/p5_erd.jpeg)
+
 # Features
 ## Profiles Endpoint
 ```
