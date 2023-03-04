@@ -11,14 +11,14 @@
 ## Post search and filter
 | Test Description              | Test | Result |
 |-------------------------------|------------------------------------------|--------|
-|search|As a user <br> when I enter a search term in the /posts endpoint <br> posts with author or titles that contain the search terms are displayed.|PASS|
+|search|As a user <br> when I enter a search term in the /posts endpoint filter form <br> posts with author or titles that contain the search terms are displayed.|PASS|
 |filter by category|As a user <br> when I select a category from the /posts endpoint dropdown filter <br> posts whose category matches the selected one are displayed.|PASS|
 |filter by author|As a user <br> when I select an author from the /posts endpoint dropdown filter <br> posts whose author matches the selected one are displayed.|PASS|
 
 ## Recipe search and filter
 | Test Description              | Test | Result |
 |-------------------------------|------------------------------------------|--------|
-|search|||
-|filter by dish_type|||
-|filter by author|||
-|filter by difficulty|||
+|search|As a user <br> when I enter a search term in the /recipes endpoint filter form <br> recipes with author or titles that contain the search terms are displayed.|PASS|
+|filter by dish_type|As a user <br> when I select a dish_type from the /recipes endpoint dropdown filter <br> recipes whose dish_type matches the selected one are displayed.|PASS|
+|filter by author|As a user <br> when I select an author from the /recipes endpoint dropdown filter <br> recipes whose author matches the selected one are displayed.|PASS|
+|filter by difficulty|As a user <br> when I select an difficulty from the /recipes endpoint dropdown filter <br> recipes whose difficulty matches the selected one are displayed.|PASS|
