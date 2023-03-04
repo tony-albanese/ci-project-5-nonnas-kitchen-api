@@ -35,7 +35,7 @@
 
 
 # Nonna's Kitchen Backend
-Food has the power to invoke strong emotions - especially food that is connected with our ancestors, family, and culture. Nonna's Kitchen API (Nonna is Italian for grandmother) provides the backend for the creation, storage, retrieval, search, and filtering of content that centers around the food of our anscestors and culture. The two main content types are a BlogPost and a Recipe. A BlogPost allows a user to write a short paragraph describing the emotional connection they have with a dish and upload a picture if they choose. A Recipe is just that - a way for users to share the recipes of their cultture with the community. 
+Food has the power to invoke strong emotions - especially food that is connected with our ancestors, family, and culture. Nonna's Kitchen API (Nonna is Italian for grandmother) provides the backend for the creation, storage, retrieval, search, and filtering of content that centers around the food of our ancestors and culture. The two main content types are a BlogPost and a Recipe. A BlogPost allows a user to write a short paragraph describing the emotional connection they have with a dish and upload a picture if they choose. A Recipe is just that - a way for users to share the recipes of their culture with the community. 
 
 This API provides the necessary resources to manage users, create, rate, and comment upon content as well as to search and filter content depending on what features a front-end developer wishes to implement.
 
@@ -52,7 +52,7 @@ This API provides the necessary resources to manage users, create, rate, and com
 + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to save a Post object to the database so that users of my application can share their content.
 + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a Post so that I do not have to manually update the database when a user deletes their post.
 + As a developer using Nonna's Kitchen backend to build applications, I want to and endpoint to update a Post so that I do not have to manually update the database when a user updates their post.
-+ As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifiying or deleting posts that they did not author so that I do not have to check for permissions manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifying or deleting posts that they did not author so that I do not have to check for permissions manually.
 
 ### Comments
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint for users to comment on a post so that I do not have to manually write to the database on the front end.
@@ -77,23 +77,23 @@ This API provides the necessary resources to manage users, create, rate, and com
 + As a developer using Nonna's Kitchen backend to build applications, I want to have search and filter functionality for a BlogPost so that I do not have to manually query the database.
 
 ### Recipes
-+ As a developer using Nonna's Kitchen backend to build applications, I want and endpoin to perform CRUD operations on a RECIPE so that I do not have query the database manually.
-+ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to perform CRUD operations on a RECIPE so that I do not have query the database manually.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recipe ** so that my users can see the data they want without me having to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
 + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
-+ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
-+ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaulate content without having to query the database myself.
++ As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users share their opinions on content.
++ As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaluate content without having to query the database myself.
 
 # Database Design
 ## Models
-The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arize. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
+The **User** model is an extension of the **AbstractUser** model from Django authorization app. The reason for doing so is to make it easier to customize the User model should the need arise. In Django, it is exceedingly difficult, if not impossible, to modify the User object in the middle of a project without resetting the database. Using a custom model from the start, even if unmodified, should make future changes much less painful. 
 
-settings.py was modified with the following setting so that django authorizaton uses this custom model.
+settings.py was modified with the following setting so that django authorization uses this custom model.
 ```
 AUTH_USER_MODEL = 'kitchen_user.User'
 ```
 
-The **AbstractLike** model encapsualtes the information common to all likes. This model is marked as abstract so that a table will not be created for it. The owner field is one-to-many becuase a Like can have only one author but a User can have many Likes.  Other types of Like models can inherit from this model and add the fields needed. 
+The **AbstractLike** model encapsulates the information common to all likes. This model is marked as abstract so that a table will not be created for it. The owner field is one-to-many because a Like can have only one author but a User can have many Likes.  Other types of Like models can inherit from this model and add the fields needed. 
 
 |AbstractLike ||
 |-----|----|
@@ -101,7 +101,7 @@ The **AbstractLike** model encapsualtes the information common to all likes. Thi
 |ForeignKey(User)|owner|
 |DateTimeField|created_on|
 
-The **AbstractComment** model encapsulates the information common to all comments. This model is marked as abstract so that a table will not be created for it. The author field is a one-to-many realationhip with a User since each Comment can only have one author.
+The **AbstractComment** model encapsulates the information common to all comments. This model is marked as abstract so that a table will not be created for it. The author field is a one-to-many relationship with a User since each Comment can only have one author.
 |AbstractComment ||
 |-----|----|
 |type|field name|
@@ -109,7 +109,7 @@ The **AbstractComment** model encapsulates the information common to all comment
 |DateTimeField|created_on|
 |TextField|body|
 
-The **Profile** model encapsulates the extra data to enhance the standard information in the User model. The Profile contains additional fields for a biography, an avatar, and a cooking speciality.
+The **Profile** model encapsulates the extra data to enhance the standard information in the User model. The Profile contains additional fields for a biography, an avatar, and a cooking specialty.
 |Profile ||
 |-----|----|
 |type|field name|
@@ -121,7 +121,7 @@ The **Profile** model encapsulates the extra data to enhance the standard inform
 |CharField|specialty|
 |ImageField|avatar|
 
-The **BlogPost** model encapsulates the information a user wants to share on the site. The idea behind a **BlogPost** object is that is supposed to be realtively short (1 to 2 paragraphs) and is supposed to represent a memory or anecdote connected to food from their ancestors. In addition to content, the user can (and should) attach a photo to the post. In addition, they must categorize the post as a history, anecdote, or tip. 
+The **BlogPost** model encapsulates the information a user wants to share on the site. The idea behind a **BlogPost** object is that is supposed to be relatively short (1 to 2 paragraphs) and is supposed to represent a memory or anecdote connected to food from their ancestors. In addition to content, the user can (and should) attach a photo to the post. In addition, they must categorize the post as a history, anecdote, or tip. 
 
 |BlogPost ||
 |-----|----|
@@ -197,7 +197,7 @@ The **AbstractRating** model encapsulates the information common to all ratings.
 |ForeignKey(User)|owner|
 |IntegerField|rating|
 
-The **RecipeRating** model encapsulates the information required for a User to rate a Recipe. It extends the AbstractRating model. The recipe field is OneToMany because a Recipe can have many RecipeRatings but each RecipeRating can belong to only one Recipe. There is a uniqe_togethe field between recipe and owner to prevent a user from leaving multiple ratings on a Recipe.
+The **RecipeRating** model encapsulates the information required for a User to rate a Recipe. It extends the AbstractRating model. The recipe field is OneToMany because a Recipe can have many RecipeRatings but each RecipeRating can belong to only one Recipe. There is a unique_together field between recipe and owner to prevent a user from leaving multiple ratings on a Recipe.
 
 |RecipeRating ||
 |-----|----|
@@ -246,7 +246,7 @@ These endpoints are to view the details for an individual post. If the user is a
 ![modify delete post if owner](repo_images/post_detail_isauthor.png)
 > + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint to delete a Post so that I do not have to manually update the database when a user deletes their post.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to and endpoint to update a Post so that I do not have to manually update the database when a user updates their post.
-> + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifiying or deleting posts that they did not author so that I do not have to check for permissions manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want the backend to prevent users from modifying or deleting posts that they did not author so that I do not have to check for permissions manually.
 
 ## Comment Endpoint
 ```
@@ -295,7 +295,7 @@ DELETE followers/<int:id>
 ```
 This endpoint allows users to follow and unfollow each other. In addition, one can retrieve the list of all Followers for filtering and analysis.
 ![follower list](repo_images/follower_list.png) 
-![folower detail](repo_images/follower_detail.png)
+![follower detail](repo_images/follower_detail.png)
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to allow a user to follow another user so that I do not have to manually query the database.
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to allow users to unfollow each other so that I do not have to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want to get a list of followers with an endpoint so that I do not have to query the database manually.
@@ -326,7 +326,7 @@ GET recipes/<int:id>/
 PUT recipes/<int:id>/
 DELETE recipes/<int:id>/
 ```
-This enpoint allows a User to enter a Recipe if they're logged in or to get a list of all the recipes if they are not. A User can update or delete a recipe if they are the owner. A user can also like a recipe if they are logged in and see how many likes a recipe can have. Recipes can be searched by title and type and filtered by type, author, difficulty, and author profile.  A user can remove their own like from a Recipe. This functionality is tested in the [TDD test cases](test_tdd_cases.md) file.
+This endpoint allows a User to enter a Recipe if they're logged in or to get a list of all the recipes if they are not. A User can update or delete a recipe if they are the owner. A user can also like a recipe if they are logged in and see how many likes a recipe can have. Recipes can be searched by title and type and filtered by type, author, difficulty, and author profile.  A user can remove their own like from a Recipe. This functionality is tested in the [TDD test cases](test_tdd_cases.md) file.
 
 + Recipes List
 ![recipes list](repo_images/recipes_list.png)
@@ -339,8 +339,8 @@ This enpoint allows a User to enter a Recipe if they're logged in or to get a li
 + Like a Recipe if logged in.
 ![like recipe if logged in](repo_images/recipe_liked_logged_in.png)
 
-> + As a developer using Nonna's Kitchen backend to build applications, I want and endpoin to perform CRUD operations on a RECIPE so that I do not have query the database manually.
-> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recpie ** so that my users can see the data they want without me having to query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to perform CRUD operations on a RECIPE so that I do not have query the database manually.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **filter a recipe ** so that my users can see the data they want without me having to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to **search recipes ** so that my users can see the data they want without me having to query the database manually.
 > + As a developer using Nonna's Kitchen backend to build applications, I want and endpoint to like a recipe so that I can have my users mark content they like without having to query the database manually.
 
@@ -354,7 +354,7 @@ DELETE recipes/comments<int:id>/
 ```
 This endpoint allows users to leave a comment on a recipe if they are logged in. A user can get a list of all the recipe comments. Permissions are implemented so that a user can only update and delete their own comments.
 ![recipe comment](repo_images/recipe_comment.png) 
-> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users shaire their opinions on content.
+> + As a developer using Nonna's Kitchen backend to build applications, I want an endpoint to comment on a recipe so that I can have my users share their opinions on content.
 
 ## Recipe Rating Endpoint
 ```
@@ -366,7 +366,7 @@ DELETE recipes/ratings<int:id>/
 ```
 This endpoint allows a User to rate a Recipe. A valid rating must be an integer between 1 and 5. A User can get a list of ratings and create a new rating if they are logged in. They can update a rating if they are the owner. A user is prevented from updating or deleting a Rating they do not own. They cannot leave multiple ratings for a Recipe, but they can update the value of a current rating.
 ![ratings list](repo_images/recipe_rating.png)  
-> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaulate content without having to query the database myself.  
+> + As a developer using Nonna's Kitchen backend to build applications, I want to have an endpoint for users to rate a Recipe so that I can give them a way to evaluate content without having to query the database myself.  
 A field for the average rating has also been added to the RecipeList view to display the average rating associated for a recipe.
 ![average rating](repo_images/average_rating.png)
 
@@ -411,7 +411,7 @@ The results of running the tests are shown in the following screenshot:
 # Unfixed Bugs
 At the time of this writing, I am not aware of any serious bugs in the code. However, there is one issue that should be addressed at some point. That issue has to be with the two JSON field types (procedure and ingredients) in the Recipe model. Currently, the only validation that is performed is if the field is if the data is in JSON format. That, however, does no prevent any user of this API from writing a front-end to post data to these fields in any JSON format they wish. It is very easy to encapsulate any kind of data at all in a JSON format and at this point, the API would accept that data. That would result in problems displaying recipe steps and ingredients on the front-end if this data were inconsistently formatted.
 
-Since there is only one developer and consumer of this API, this is ok for now. But should this API be released to the wider public for greater consumption, then this potential data problem should be addressed. Specificially, incoming POST data could be validated against a JSON schema before it is allowed to be written to the database. That would force front end developers to submit data in a consistent and standard format. 
+Since there is only one developer and consumer of this API, this is ok for now. But should this API be released to the wider public for greater consumption, then this potential data problem should be addressed. Specifically, incoming POST data could be validated against a JSON schema before it is allowed to be written to the database. That would force front end developers to submit data in a consistent and standard format. 
 
 Generating and using a JSON schema to validate data is beyond the scope of the project at this time but should definitely be incorporated into a future release.
 
@@ -428,8 +428,8 @@ Git was employed in this project and the project code hosted on GitHub. I used b
 + [django-taggit](https://django-taggit.readthedocs.io/en/latest/)A django app for storing and searching tags
 
 ## Project Creation
-+ Cloned Code Institute Repository and gave the new respositry the name [ci-project-5-nonnas-kitchen-backend](https://github.com/tony-albanese/ci-project-5-nonnas-kitchen-backend)
-+ Initialized GitPod Workspace by clicking on the GitPod button on the respository
++ Cloned Code Institute Repository and gave the new repository the name [ci-project-5-nonnas-kitchen-backend](https://github.com/tony-albanese/ci-project-5-nonnas-kitchen-backend)
++ Initialized GitPod Workspace by clicking on the GitPod button on the repository
 + Installed support libraries and Django according to the walkthrough on Code Institute the steps of which are outlined as follows:
 
     + Install django
