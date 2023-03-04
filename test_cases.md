@@ -8,3 +8,17 @@
 |Update individual profile|As a developer <br> When the /profiles/id endpoint is entered <br> If I am the owner of the profile <br> I can send updated data to the profiles/id through a POST request <br> a response with code 200 and the updated data in JSON format is returned|PASS|
 |Update own profile|As a developer <br> When the /profiles/id endpoint is entered <br> If I am not the owner of the profile <br> I cannot send updated data to the profiles/id through a POST request <br>If I try, a response with code 403 and and error message in JSON format is returned|PASS|
 
+## Post search and filter
+| Test Description              | Test | Result |
+|-------------------------------|------------------------------------------|--------|
+|search|As a user <br> when I enter a search term in the /posts endpoint <br> posts with author or titles that contain the search terms are displayed.|PASS|
+|filter by category|As a user <br> when I select a category from the /posts endpoint dropdown filter <br> posts whose category matches the selected one are displayed.|PASS|
+|filter by author|As a user <br> when I select an author from the /posts endpoint dropdown filter <br> posts whose author matches the selected one are displayed.|PASS|
+
+## Recipe search and filter
+| Test Description              | Test | Result |
+|-------------------------------|------------------------------------------|--------|
+|search|||
+|filter by dish_type|||
+|filter by author|||
+|filter by difficulty|||
