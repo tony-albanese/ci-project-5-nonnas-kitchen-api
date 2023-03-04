@@ -158,7 +158,7 @@ The **Follower** model encapsulates the information required for a User to follo
 
 
 The **Recipe** model encapsulates the information required for a Recipe object in the database.
-|Like ||
+|Recipe ||
 |-----|----|
 |type|field name|
 |ForeignKey(User)|author|
@@ -191,7 +191,7 @@ The **RecipeComment** model encapsulates the information required for a User to 
 
 The **AbstractRating** model encapsulates the information common to all ratings. The user field is OneToMany because a User can have multiple ratings but each Rating can belong to only one User.
 
-|AbtrsactRating ||
+|AbstractRating ||
 |-----|----|
 |type|field name|
 |ForeignKey(User)|owner|
