@@ -39,6 +39,8 @@ Food has the power to invoke strong emotions - especially food that is connected
 
 This API provides the necessary resources to manage users, create, rate, and comment upon content as well as to search and filter content depending on what features a front-end developer wishes to implement.
 
+# Project Structure
+The overall structure of the project was modelled from from the [drf-api](https://github.com/Code-Institute-Solutions/drf-api) walktrhough. This is to be expected since the walkthrough follows an insdustry standard way of implementing an API. In addition, the strucutre of the serializer, model, and url files are also adapted from the walkthrough since this is the "pythonic" way of implementing an API using the Django REST framework.
 
 ## Developer User Stories
 ### Profiles
@@ -493,9 +495,11 @@ For improved readability, the steps followed are broken down into the following 
 + [Deployment to Heroku](deployment_heroku.md)
 
 # Credits
-Default avatar: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by logisstudio - Flaticon</a>
-Default BlogPost image: <a href="https://www.freepik.com/free-vector/plate-cuttlery-graphic-illustration_2685788.htm#query=meal&position=1&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
++ Default avatar: <a href="https://www.flaticon.com/free-icons/user" title="user icons">User icons created by logisstudio - Flaticon</a>
++ Default BlogPost image: <a href="https://www.freepik.com/free-vector/plate-cuttlery-graphic-illustration_2685788.htm#query=meal&position=1&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
 
-The code for implementing a ratings bar came from this Medium blog post: [Django: Implementing Star Rating](https://medium.com/geekculture/django-implementing-star-rating-e1deff03bb1c)
++ The code for implementing a ratings bar came from this Medium blog post: [Django: Implementing Star Rating](https://medium.com/geekculture/django-implementing-star-rating-e1deff03bb1c)
 
-The fix for the dj-rest-auth bug was taken from the [Code Institute's Repo](https://github.com/Code-Institute-Solutions/drf-api/blob/master/drf_api/views.py#L16) directly.
++ The fix for the dj-rest-auth bug was taken from the [Code Institute's Repo](https://github.com/Code-Institute-Solutions/drf-api/blob/master/drf_api/views.py#L16) directly.
+
++ The code for the Profiles app was adapted from Code Institute's walkthrough project [drf-api](https://github.com/Code-Institute-Solutions/drf-api).
