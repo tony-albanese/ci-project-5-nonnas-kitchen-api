@@ -2,6 +2,9 @@ from rest_framework import serializers
 from .models import Profile
 from followers.models import Follower
 
+# The code for this model was adapted from the drf walktrhough from Code Institute
+# https://github.com/Code-Institute-Solutions/drf-api/blob/master/profiles/serializers.py
+
 
 class ProfileSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
@@ -10,7 +13,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     posts_count = serializers.ReadOnlyField()
     follower_count = serializers.ReadOnlyField()
     following_count = serializers.ReadOnlyField()
-
 
     def get_is_owner(self, obj):
         request = self.context['request']
@@ -23,11 +25,10 @@ class ProfileSerializer(serializers.ModelSerializer):
             return following.id if following else None
         return None
 
-
     class Meta:
         model = Profile
         fields = [
-            'id', 'owner', 'first_name', 'last_name', 'created_on', 
+            'id', 'owner', 'first_name', 'last_name', 'created_on',
             'bio', 'avatar', 'is_owner', 'following_id',
             'posts_count', 'follower_count', 'following_count'
         ]
