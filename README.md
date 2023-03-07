@@ -39,6 +39,10 @@ Food has the power to invoke strong emotions - especially food that is connected
 
 This API provides the necessary resources to manage users, create, rate, and comment upon content as well as to search and filter content depending on what features a front-end developer wishes to implement.
 
+## Links to Deployed Project
++ The project is deployed on Heroku and is available at the folowing link: [Deployed Nonna's Kitchen API](https://nonnas-kitchen-api.herokuapp.com/)
++ The link for the GitHub repo to corresponding front end for this project is here: [Nonna's Kitchen Front End](https://github.com/tony-albanese/nonnas-kitchen)
+
 # Project Structure
 The overall structure of the project was modelled from from the [drf-api](https://github.com/Code-Institute-Solutions/drf-api) walktrhough. This is to be expected since the walkthrough follows an insdustry standard way of implementing an API. In addition, the strucutre of the serializer, model, and url files are also adapted from the walkthrough since this is the "pythonic" way of implementing an API using the Django REST framework.
 
