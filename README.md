@@ -26,6 +26,7 @@
 - [Testing](#testing)
   * [Behavior Driven Development (BDD)](#behavior-driven-development--bdd-)
   * [Test Driven Development (TDD)](#test-driven-development--tdd-)
+  * [Code Validation](#code-validation)
 - [Unfixed Bugs](#unfixed-bugs)
 - [Version Control Strategy](#version-control-strategy)
 - [Deployment](#deployment)
@@ -35,7 +36,6 @@
 - [Credits](#credits)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
 
 
 # Nonna's Kitchen Backend
