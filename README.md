@@ -1,6 +1,8 @@
 ![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
 
 - [Nonna's Kitchen Backend](#nonna-s-kitchen-backend)
+  * [Links to Deployed Project](#links-to-deployed-project)
+- [Project Structure](#project-structure)
   * [Developer User Stories](#developer-user-stories)
     + [Profiles](#profiles)
     + [Posts](#posts)
@@ -24,6 +26,7 @@
 - [Testing](#testing)
   * [Behavior Driven Development (BDD)](#behavior-driven-development--bdd-)
   * [Test Driven Development (TDD)](#test-driven-development--tdd-)
+- [Unfixed Bugs](#unfixed-bugs)
 - [Version Control Strategy](#version-control-strategy)
 - [Deployment](#deployment)
   * [Technology Used](#technology-used)
@@ -32,6 +35,7 @@
 - [Credits](#credits)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 
 
 # Nonna's Kitchen Backend
