@@ -418,6 +418,12 @@ A form of TDD was performed in this project. Strictly speaking, the tests should
 The results of running the tests are shown in the following screenshot:  
 ![tdd results](repo_images/api_tdd_results.png)
 
+## Code Validation
+Each file in the code was linted using the linter from the Python plugin in VSCode. The only error I have chosen to ingore is the "Line too long" error. Since this line length of 80 charachters is largely irrelevant today and many developers simply increase the line length, I have chosen to leave it as it stands since breaking the longer lines with line breaks seems to actually reduce code readability.
+
+The results of the linting are captured in the screenshot. (Since this is a larger project, a selective sample was given.)  
+![lint results](repo_images/python_linter_results.png)
+
 # Unfixed Bugs
 At the time of this writing, I am not aware of any serious bugs in the code. However, there is one issue that should be addressed at some point. That issue has to be with the two JSON field types (procedure and ingredients) in the Recipe model. Currently, the only validation that is performed is if the field is if the data is in JSON format. That, however, does not prevent any user of this API from writing a front-end to post data to these fields in any JSON format they wish. It is very easy to encapsulate any kind of data at all in a JSON format and at this point, the API would accept that data. That would result in problems displaying recipe steps and ingredients on the front-end if this data were inconsistently formatted.
 
