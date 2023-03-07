@@ -11,11 +11,12 @@ class CommentSerializer(serializers.ModelSerializer):
     def get_is_author(self, obj):
         request = self.context['request']
         return request.user == obj.author
-    
+
     class Meta:
         model = Comment
         fields = [
-            'id', 'author', 'blog_post', 'body', 'created_on', 'is_author','profile_id','profile_image',
+            'id', 'author', 'blog_post', 'body', 'created_on',
+            'is_author', 'profile_id', 'profile_image',
         ]
 
 
@@ -37,7 +38,7 @@ class RecipeCommentSerializer(serializers.ModelSerializer):
         model = RecipeComment
 
         fields = [
-            'id', 'author', 'recipe', 'body', 'created_on', 'is_author','profile_id','profile_image',
+            'id', 'author', 'recipe', 'body', 'created_on', 'is_author', 'profile_id', 'profile_image',
         ]
 
 

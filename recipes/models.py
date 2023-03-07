@@ -8,7 +8,7 @@ from taggit.managers import TaggableManager
 
 class Recipe(models.Model):
     DISH_TYPE = [
-        ('app','Appetizer'),
+        ('app', 'Appetizer'),
         ('mains', 'Main Dish'),
         ('pasta', 'Pasta Dish'),
         ('meat', 'Meat Dish'),
@@ -50,7 +50,7 @@ class Recipe(models.Model):
 
     class Meta:
         ordering = ['-posted_on']
-        
+
     def __str__(self):
         return self.title
 

@@ -2,6 +2,9 @@ from django.db import models
 from django.db.models.signals import post_save
 from kitchen_user.models import User
 
+# The code for this model was adapted from the drf walktrhough from Code Institute
+# https://github.com/Code-Institute-Solutions/drf-api/blob/master/profiles/models.py
+
 
 class Profile(models.Model):
     SPECIALTY_CHOICES = [

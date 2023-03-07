@@ -26,14 +26,14 @@ class TestFollowerListView(APITestCase):
         So user_a will login and follow user_c
         """
         self.client.login(username='user_a', password='pass')
-        response = self.client.post('/followers/', {'following': 1, 'follower': 3 })
+        response = self.client.post('/followers/', {'following': 1, 'follower': 3})
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_cant_follow_if_not_logged_in(self):
         """
         In this test, user_a will follow user_c without being logged in.
         """
-        response = self.client.post('/followers/', {'following': 1, 'follower': 3 })
+        response = self.client.post('/followers/', {'following': 1, 'follower': 3})
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_cant_follow_user_twice(self):
@@ -42,7 +42,7 @@ class TestFollowerListView(APITestCase):
         So user_a will login and follow user_b. user_b has been followed in setUp()
         """
         self.client.login(username='user_a', password='pass')
-        response = self.client.post('/followers/', {'following': 1, 'follower': 2 })
+        response = self.client.post('/followers/', {'following': 1, 'follower': 2})
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
@@ -63,7 +63,7 @@ class TestFollowerDetailView(APITestCase):
         self.client.login(username='user_a', password='pass')
         response = self.client.delete('/followers/1/')
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-    
+
     def test_cant_unfollow_if_not_logged_in(self):
         response = self.client.delete('/followers/1/')
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)

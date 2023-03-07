@@ -22,9 +22,9 @@ class CommentViewTests(APITestCase):
         response = self.client.get('/comments/')
         count = Comment.objects.count()
 
-        self.assertEqual(count,1)
+        self.assertEqual(count, 1)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
+
     def test_can_create_comment_if_logged_in(self):
         self.client.login(username='user_a', password='pass')
         current_user = User.objects.get(username='user_a')
@@ -45,7 +45,7 @@ class CommentViewTests(APITestCase):
         comment = Comment.objects.create(author=current_user, blog_post=blog_post, body="Test body.")
         response = self.client.put('/comments/1/', {'body': 'Updated comment body'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-    
+
     def test_user_cannot_update_comment_if_not_owner(self):
         self.client.login(username='user_a', password='pass')
         current_user = User.objects.get(username='user_a')
@@ -113,7 +113,7 @@ class RecipeCommentViewTests(APITestCase):
 
         self.assertEqual(count, 2)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
+
     def test_can_create_recipe_comment_if_logged_in(self):
         self.client.login(username='user_a', password='pass')
         current_user = User.objects.get(username='user_a')
