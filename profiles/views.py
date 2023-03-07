@@ -47,4 +47,3 @@ class ProfileDetailView(generics.RetrieveUpdateAPIView):
         follower_count=Count('owner__follower', distinct=True),
         following_count=Count('owner__following', distinct=True)
     ).order_by('-created_on')
- 

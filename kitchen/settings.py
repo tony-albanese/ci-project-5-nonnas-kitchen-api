@@ -65,7 +65,7 @@ DEBUG = 'DEV' in os.environ
 
 ALLOWED_HOSTS = [
     os.environ.get('ALLOWED_HOST'),
-    'localhost', 
+    'localhost',
     ]
 
 
@@ -161,7 +161,7 @@ else:
     DATABASES = {
          'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
      }
-    
+
 
 """
 DATABASES = {

@@ -18,7 +18,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
     comments_count = serializers.ReadOnlyField()
     ratings_count = serializers.ReadOnlyField()
     average_rating = serializers.SerializerMethodField()
-    
+
     def validate_recipe_image(self, value):
         if value.size > 1024*1024*2:
             raise serializers.ValidationError(
@@ -36,7 +36,7 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     def get_dish_type_name(self, obj):
         return obj.get_dish_type_display()
-    
+
     def get_average_rating(self, obj):
         return obj.average_rating()
 
@@ -54,14 +54,14 @@ class RecipeSerializer(TaggitSerializer, serializers.ModelSerializer):
         fields = [
             'id', 'author', 'is_author', 'posted_on', 'title', 'description', 'dish_type',
             'dish_type_name', 'difficulty', 'time', 'time_unit', 'servings',
-            'ingredients_list', 'procedure', 'tags', 'recipe_image', 
+            'ingredients_list', 'procedure', 'tags', 'recipe_image',
             'profile_id', 'profile_image', 'likes_count', 'like_id', 'comments_count', 'ratings_count', 'average_rating'
         ]
 
 
 class RecipeLikeSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    
+
     class Meta:
         model = RecipeLike
         fields = [
@@ -80,7 +80,7 @@ class RecipeLikeSerializer(serializers.ModelSerializer):
 class RecipeRatingSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     is_owner = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = RecipeRating
         fields = [
@@ -106,4 +106,3 @@ class RecipeRatingSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 'detail': 'possible duplicate like'
             })
-

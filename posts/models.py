@@ -27,7 +27,7 @@ class BlogPost(models.Model):
 
     def __str__(self):
         return self.title
-    
+
 
 class Like(AbstractLike):
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='likes')
